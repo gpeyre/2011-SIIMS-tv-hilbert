@@ -1,0 +1,1454 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.9.19)  7 JAN 2017 21:03
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**MaurelAujolPeyre-SIIS.tex
+(./MaurelAujolPeyre-SIIS.tex
+LaTeX2e <2016/03/31>
+Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
+(./siamltex.cls
+Document Class: siamltex 1996/10/11 v1.2 LaTeX document class
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/leqno.clo
+File: leqno.clo 2015/03/31 v1.1i Standard LaTeX option (left equation numbers)
+) (./siam10.clo
+File: siam10.clo 1994/10/01 v1.0 SIAM LaTeX file (size option)
+)
+\c@section=\count79
+\c@subsection=\count80
+\c@subsubsection=\count81
+\c@paragraph=\count82
+\c@subparagraph=\count83
+\c@rmnum=\count84
+\c@muni=\count85
+\c@theorem=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(./gpeyre.sty (/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2016/03/10 v2.15b AMS math features
+\@mathmargin=\skip43
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks14
+\ex@=\dimen103
+))
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen104
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count89
+LaTeX Info: Redefining \frac on input line 199.
+\uproot@=\count90
+\leftroot@=\count91
+LaTeX Info: Redefining \overline on input line 297.
+\classnum@=\count92
+\DOTSCASE@=\count93
+LaTeX Info: Redefining \ldots on input line 394.
+LaTeX Info: Redefining \dots on input line 397.
+LaTeX Info: Redefining \cdots on input line 518.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 634.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
+\macc@depth=\count94
+\c@MaxMatrixCols=\count95
+\dotsspace@=\muskip10
+\c@parentequation=\count96
+\dspbrk@lvl=\count97
+\tag@help=\toks15
+\row@=\count98
+\column@=\count99
+\maxfields@=\count100
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2739.
+LaTeX Info: Redefining \] on input line 2740.
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+\c@thm=\count101
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/05/09 v1.0r Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/01/02 v1.10 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 96.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count102
+))
+\Gin@req@height=\dimen112
+\Gin@req@width=\dimen113
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count103
+\float@exts=\toks20
+\float@box=\box28
+\@float@everytoks=\toks21
+\@floatcapt=\box29
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/tools/array.sty
+Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen114
+\extrarowheight=\dimen115
+\NC@list=\toks22
+\extratabsurround=\skip46
+\backup@length=\skip47
+)
+\@float@every@listing=\toks23
+\c@listing=\count104
+
+(./MaurelAujolPeyre-SIIS.aux)
+\openout1 = `MaurelAujolPeyre-SIIS.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+
+(/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count105
+\scratchdimen=\dimen116
+\scratchbox=\box30
+\nofMPsegments=\count106
+\nofMParguments=\count107
+\everyMPshowfont=\toks24
+\MPscratchCnt=\count108
+\MPscratchDim=\dimen117
+\MPnumerator=\count109
+\makeMPintoPDFobject=\count110
+\everyMPtoPDFconversion=\toks25
+) (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2016/05/14 v3.1 Provides the ifpdf switch
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+))
+(/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+LaTeX Font Info:    Try loading font information for U+msa on input line 32.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 32.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 36.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 36.
+
+Overfull \hbox (2.85527pt too wide) in paragraph at lines 47--49
+[]\OT1/cmr/bx/n/8 Key words. \OT1/cmr/m/n/8 Lo-cally par-al-lel tex-tures, im-a
+ge de-com-po-si-tion, in-paint-ing, to-tal vari-a-tion, curvelets,
+ []
+
+<samples/dunes.pdf, id=1, 200.75pt x 200.75pt>
+File: samples/dunes.pdf Graphic file (type pdf)
+ <use samples/dunes.pdf>
+Package pdftex.def Info: samples/dunes.pdf used on input line 70.
+(pdftex.def)             Requested size: 88.89412pt x 88.89696pt.
+
+<samples/fingerprint.pdf, id=2, 126.4725pt x 126.4725pt>
+File: samples/fingerprint.pdf Graphic file (type pdf)
+
+<use samples/fingerprint.pdf>
+Package pdftex.def Info: samples/fingerprint.pdf used on input line 71.
+(pdftex.def)             Requested size: 88.89412pt x 88.89487pt.
+
+<samples/turbulence.pdf, id=3, 256.96pt x 256.96pt>
+File: samples/turbulence.pdf Graphic file (type pdf)
+
+<use samples/turbulence.pdf>
+Package pdftex.def Info: samples/turbulence.pdf used on input line 72.
+(pdftex.def)             Requested size: 88.89412pt x 88.89438pt.
+ <samples/zebra.pdf, id=4, 100.375pt x 99.37125pt>
+File: samples/zebra.pdf Graphic file (type pdf)
+
+<use samples/zebra.pdf>
+Package pdftex.def Info: samples/zebra.pdf used on input line 73.
+(pdftex.def)             Requested size: 88.89412pt x 88.01102pt.
+ [1
+
+{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./sampl
+es/dunes.pdf> <./samples/fingerprint.pdf> <./samples/turbulence.pdf> <./samples
+/zebra.pdf>] [2] [3]
+<./images/illust_xi/illust_xi_image_texture.png, id=44, 597.23125pt x 597.23125
+pt>
+File: ./images/illust_xi/illust_xi_image_texture.png Graphic file (type png)
+ <use ./images/illust_xi/illust_xi_image_texture.png>
+Package pdftex.def Info: ./images/illust_xi/illust_xi_image_texture.png used on
+ input line 163.
+(pdftex.def)             Requested size: 111.11624pt x 111.11484pt.
+
+<./images/illust_xi/illust_xi.png, id=45, 597.23125pt x 597.23125pt>
+File: ./images/illust_xi/illust_xi.png Graphic file (type png)
+
+<use ./images/illust_xi/illust_xi.png>
+Package pdftex.def Info: ./images/illust_xi/illust_xi.png used on input line 16
+5.
+(pdftex.def)             Requested size: 111.11624pt x 111.11484pt.
+Missing character: There is no   in font cmr10!
+ [4 <./images/illust_xi/illust_xi_image_texture.png> <./images/illust_xi/illust
+_xi.png>] [5] [6] [7]
+Overfull \hbox (10.95107pt too wide) in paragraph at lines 351--353
+\OT1/cmr/m/n/10 which rep-re-sents the lo-cal fre-quency of the tex-ture com-po
+-nent $\OML/cmm/m/it/10 v$\OT1/cmr/m/n/10 . For $\OML/cmm/m/it/10 p \OMS/cmsy/m
+/n/10 2 f\OT1/cmr/m/n/10 1\OML/cmm/m/it/10 ; [] ; n=\OT1/cmr/m/n/10 ^^A[]\OMS/c
+msy/m/n/10 g[]$\OT1/cmr/m/n/10 ,
+ []
+
+[8] [9] [10]
+<./images/illust_xi/bugsbunny_textparabole_cadre.jpg, id=76, 192.72pt x 192.72p
+t>
+File: ./images/illust_xi/bugsbunny_textparabole_cadre.jpg Graphic file (type jp
+g)
+ <use ./images/illust_xi/bugsbunny_textparabole_cadre.jpg>
+Package pdftex.def Info: ./images/illust_xi/bugsbunny_textparabole_cadre.jpg us
+ed on input line 549.
+(pdftex.def)             Requested size: 85.18668pt x 85.18521pt.
+
+<./images/illust_xi/illust_xi_estim_patch.png, id=77, 32.12pt x 32.12pt>
+File: ./images/illust_xi/illust_xi_estim_patch.png Graphic file (type png)
+
+<use ./images/illust_xi/illust_xi_estim_patch.png>
+Package pdftex.def Info: ./images/illust_xi/illust_xi_estim_patch.png used on i
+nput line 550.
+(pdftex.def)             Requested size: 85.18668pt x 85.19351pt.
+
+<./images/illust_xi/illust_xi_estim_fourier.png, id=78, 32.12pt x 32.12pt>
+File: ./images/illust_xi/illust_xi_estim_fourier.png Graphic file (type png)
+
+<use ./images/illust_xi/illust_xi_estim_fourier.png>
+Package pdftex.def Info: ./images/illust_xi/illust_xi_estim_fourier.png used on
+ input line 551.
+(pdftex.def)             Requested size: 85.18668pt x 85.19351pt.
+
+<./images/illust_xi/illust_xi_estim_gamma.png, id=79, 32.12pt x 32.12pt>
+File: ./images/illust_xi/illust_xi_estim_gamma.png Graphic file (type png)
+
+<use ./images/illust_xi/illust_xi_estim_gamma.png>
+Package pdftex.def Info: ./images/illust_xi/illust_xi_estim_gamma.png used on i
+nput line 552.
+(pdftex.def)             Requested size: 85.18668pt x 85.19351pt.
+
+<./images/illust_xi/grayscale.png, id=80, 51.19125pt x 428.60126pt>
+File: ./images/illust_xi/grayscale.png Graphic file (type png)
+
+<use ./images/illust_xi/grayscale.png>
+Package pdftex.def Info: ./images/illust_xi/grayscale.png used on input line 55
+3.
+(pdftex.def)             Requested size: 10.3707pt x 86.82397pt.
+
+Overfull \hbox (1.1386pt too wide) in paragraph at lines 547--555
+ [] 
+ []
+
+[11]
+Overfull \hbox (3.30272pt too wide) in paragraph at lines 627--629
+\OT1/cmr/m/n/10 and the so-lu-tion $\OML/cmm/m/it/10 v[]$ \OT1/cmr/m/n/10 is co
+m-puted with a con-ju-gate gra-di-ent de-scent, since $2\OML/cmm/m/it/10 ^^V\OT
+1/cmr/m/n/10 	[]^^@[]	 +
+ []
+
+[12 <./images/illust_xi/bugsbunny_textparabole_cadre.jpg> <./images/illust_xi/i
+llust_xi_estim_patch.png (PNG copy)> <./images/illust_xi/illust_xi_estim_fourie
+r.png (PNG copy)> <./images/illust_xi/illust_xi_estim_gamma.png (PNG copy)> <./
+images/illust_xi/grayscale.png>]
+<./images/decomposition/Bugsbunny_texture/bugsbunny_textparabole.jpg, id=91, 19
+2.72pt x 192.72pt>
+File: ./images/decomposition/Bugsbunny_texture/bugsbunny_textparabole.jpg Graph
+ic file (type jpg)
+
+<use ./images/decomposition/Bugsbunny_texture/bugsbunny_textparabole.jpg>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/bugsbunny_tex
+tparabole.jpg used on input line 673.
+(pdftex.def)             Requested size: 118.5255pt x 118.52354pt.
+
+<./images/decomposition/Bugsbunny_texture/struct_originale.jpg, id=92, 192.72pt
+ x 192.72pt>
+File: ./images/decomposition/Bugsbunny_texture/struct_originale.jpg Graphic fil
+e (type jpg)
+
+<use ./images/decomposition/Bugsbunny_texture/struct_originale.jpg>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/struct_origin
+ale.jpg used on input line 674.
+(pdftex.def)             Requested size: 118.5255pt x 118.52354pt.
+
+<./images/decomposition/Bugsbunny_texture/text_originale.jpg, id=93, 192.72pt x
+ 192.72pt>
+File: ./images/decomposition/Bugsbunny_texture/text_originale.jpg Graphic file 
+(type jpg)
+ <use ./images/decomposition/Bugsbunny_texture/text_originale.jpg>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/text_original
+e.jpg used on input line 675.
+(pdftex.def)             Requested size: 118.5255pt x 118.52354pt.
+
+Underfull \hbox (badness 10000) in alignment at lines 671--676
+[][][] 
+ []
+
+
+<./images/decomposition/Bugsbunny_texture/TVL1_lambda0p7_struct.jpg, id=94, 256
+.96pt x 256.96pt>
+File: ./images/decomposition/Bugsbunny_texture/TVL1_lambda0p7_struct.jpg Graphi
+c file (type jpg)
+
+<use ./images/decomposition/Bugsbunny_texture/TVL1_lambda0p7_struct.jpg>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/TVL1_lambda0p
+7_struct.jpg used on input line 686.
+(pdftex.def)             Requested size: 114.07768pt x 114.07825pt.
+
+<./images/decomposition/Bugsbunny_texture/TVL2_mu0p9_struct.png, id=95, 256.96p
+t x 256.96pt>
+File: ./images/decomposition/Bugsbunny_texture/TVL2_mu0p9_struct.png Graphic fi
+le (type png)
+
+<use ./images/decomposition/Bugsbunny_texture/TVL2_mu0p9_struct.png>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/TVL2_mu0p9_st
+ruct.png used on input line 687.
+(pdftex.def)             Requested size: 114.07768pt x 114.07825pt.
+
+<./images/decomposition/Bugsbunny_texture/TVG_mu0p8_struct.png, id=96, 256.96pt
+ x 256.96pt>
+File: ./images/decomposition/Bugsbunny_texture/TVG_mu0p8_struct.png Graphic fil
+e (type png)
+
+<use ./images/decomposition/Bugsbunny_texture/TVG_mu0p8_struct.png>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/TVG_mu0p8_str
+uct.png used on input line 688.
+(pdftex.def)             Requested size: 114.07768pt x 114.07825pt.
+
+<./images/decomposition/Bugsbunny_texture/TVL1_lambda0p7_text.png, id=97, 256.9
+6pt x 256.96pt>
+File: ./images/decomposition/Bugsbunny_texture/TVL1_lambda0p7_text.png Graphic 
+file (type png)
+
+<use ./images/decomposition/Bugsbunny_texture/TVL1_lambda0p7_text.png>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/TVL1_lambda0p
+7_text.png used on input line 690.
+(pdftex.def)             Requested size: 114.07768pt x 114.07825pt.
+
+<./images/decomposition/Bugsbunny_texture/TVL2_mu0p9_text.png, id=98, 256.96pt 
+x 256.96pt>
+File: ./images/decomposition/Bugsbunny_texture/TVL2_mu0p9_text.png Graphic file
+ (type png)
+ <use ./images/decomposition/Bugsbunny_texture/TVL2_mu0p9_text.png>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/TVL2_mu0p9_te
+xt.png used on input line 691.
+(pdftex.def)             Requested size: 114.07768pt x 114.07825pt.
+
+<./images/decomposition/Bugsbunny_texture/TVG_mu0p8_text.png, id=99, 256.96pt x
+ 256.96pt>
+File: ./images/decomposition/Bugsbunny_texture/TVG_mu0p8_text.png Graphic file 
+(type png)
+ <use ./images/decomposition/Bugsbunny_texture/TVG_mu0p8_text.png>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/TVG_mu0p8_tex
+t.png used on input line 692.
+(pdftex.def)             Requested size: 114.07768pt x 114.07825pt.
+
+<./images/decomposition/Bugsbunny_texture/TVHm1_l25_struct.jpg, id=100, 256.96p
+t x 256.96pt>
+File: ./images/decomposition/Bugsbunny_texture/TVHm1_l25_struct.jpg Graphic fil
+e (type jpg)
+
+<use ./images/decomposition/Bugsbunny_texture/TVHm1_l25_struct.jpg>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/TVHm1_l25_str
+uct.jpg used on input line 694.
+(pdftex.def)             Requested size: 114.07768pt x 114.07825pt.
+
+<./images/decomposition/Bugsbunny_texture/TVGabor_sig42_freq82_l0p07_struct.png
+, id=101, 256.96pt x 256.96pt>
+File: ./images/decomposition/Bugsbunny_texture/TVGabor_sig42_freq82_l0p07_struc
+t.png Graphic file (type png)
+
+<use ./images/decomposition/Bugsbunny_texture/TVGabor_sig42_freq82_l0p07_struct
+.png>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/TVGabor_sig42
+_freq82_l0p07_struct.png used on input line 695.
+(pdftex.def)             Requested size: 114.07768pt x 114.07825pt.
+
+<./images/decomposition/Bugsbunny_texture/Hilbert_256_la0p1_q16_dx4_sig1p5_stru
+ct.jpg, id=102, 192.72pt x 192.72pt>
+File: ./images/decomposition/Bugsbunny_texture/Hilbert_256_la0p1_q16_dx4_sig1p5
+_struct.jpg Graphic file (type jpg)
+
+<use ./images/decomposition/Bugsbunny_texture/Hilbert_256_la0p1_q16_dx4_sig1p5_
+struct.jpg>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/Hilbert_256_l
+a0p1_q16_dx4_sig1p5_struct.jpg used on input line 696.
+(pdftex.def)             Requested size: 114.07768pt x 114.07727pt.
+
+<./images/decomposition/Bugsbunny_texture/TVHm1_l25_text.jpg, id=103, 256.96pt 
+x 256.96pt>
+File: ./images/decomposition/Bugsbunny_texture/TVHm1_l25_text.jpg Graphic file 
+(type jpg)
+ <use ./images/decomposition/Bugsbunny_texture/TVHm1_l25_text.jpg>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/TVHm1_l25_tex
+t.jpg used on input line 698.
+(pdftex.def)             Requested size: 114.07768pt x 114.07825pt.
+
+<./images/decomposition/Bugsbunny_texture/TVGabor_sig42_freq82_l0p07_text.png, 
+id=104, 256.96pt x 256.96pt>
+File: ./images/decomposition/Bugsbunny_texture/TVGabor_sig42_freq82_l0p07_text.
+png Graphic file (type png)
+
+<use ./images/decomposition/Bugsbunny_texture/TVGabor_sig42_freq82_l0p07_text.p
+ng>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/TVGabor_sig42
+_freq82_l0p07_text.png used on input line 699.
+(pdftex.def)             Requested size: 114.07768pt x 114.07825pt.
+
+<./images/decomposition/Bugsbunny_texture/Hilbert_256_la0p1_q16_dx4_sig1p5_text
+.jpg, id=105, 192.72pt x 192.72pt>
+File: ./images/decomposition/Bugsbunny_texture/Hilbert_256_la0p1_q16_dx4_sig1p5
+_text.jpg Graphic file (type jpg)
+
+<use ./images/decomposition/Bugsbunny_texture/Hilbert_256_la0p1_q16_dx4_sig1p5_
+text.jpg>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_texture/Hilbert_256_l
+a0p1_q16_dx4_sig1p5_text.jpg used on input line 700.
+(pdftex.def)             Requested size: 114.07768pt x 114.07727pt.
+
+Underfull \hbox (badness 10000) in alignment at lines 684--701
+[][][] 
+ []
+
+
+<./images/decomposition/fish/fish_orig.jpg, id=106, 292.84406pt x 292.84406pt>
+File: ./images/decomposition/fish/fish_orig.jpg Graphic file (type jpg)
+
+<use ./images/decomposition/fish/fish_orig.jpg>
+Package pdftex.def Info: ./images/decomposition/fish/fish_orig.jpg used on inpu
+t line 713.
+(pdftex.def)             Requested size: 118.5255pt x 118.52522pt.
+
+<./images/decomposition/fish/fish_struct_L2_0p40.jpg, id=107, 390.45876pt x 390
+.45876pt>
+File: ./images/decomposition/fish/fish_struct_L2_0p40.jpg Graphic file (type jp
+g)
+ <use ./images/decomposition/fish/fish_struct_L2_0p40.jpg>
+Package pdftex.def Info: ./images/decomposition/fish/fish_struct_L2_0p40.jpg us
+ed on input line 715.
+(pdftex.def)             Requested size: 118.5255pt x 118.52672pt.
+
+<./images/decomposition/fish/fish_text_L2_0p40.jpg, id=108, 390.45876pt x 390.4
+5876pt>
+File: ./images/decomposition/fish/fish_text_L2_0p40.jpg Graphic file (type jpg)
+
+ <use ./images/decomposition/fish/fish_text_L2_0p40.jpg>
+Package pdftex.def Info: ./images/decomposition/fish/fish_text_L2_0p40.jpg used
+ on input line 716.
+(pdftex.def)             Requested size: 118.5255pt x 118.52672pt.
+
+<./images/decomposition/fish/fish_text_contrast_L2_0p40.jpg, id=109, 390.45876p
+t x 390.45876pt>
+File: ./images/decomposition/fish/fish_text_contrast_L2_0p40.jpg Graphic file (
+type jpg)
+
+<use ./images/decomposition/fish/fish_text_contrast_L2_0p40.jpg>
+Package pdftex.def Info: ./images/decomposition/fish/fish_text_contrast_L2_0p40
+.jpg used on input line 717.
+(pdftex.def)             Requested size: 118.5255pt x 118.52672pt.
+
+<./images/decomposition/fish/fish_struct_l0p1_q32_dx10_sig1p4_tol18.jpg, id=110
+, 390.45876pt x 390.45876pt>
+File: ./images/decomposition/fish/fish_struct_l0p1_q32_dx10_sig1p4_tol18.jpg Gr
+aphic file (type jpg)
+
+<use ./images/decomposition/fish/fish_struct_l0p1_q32_dx10_sig1p4_tol18.jpg>
+Package pdftex.def Info: ./images/decomposition/fish/fish_struct_l0p1_q32_dx10_
+sig1p4_tol18.jpg used on input line 719.
+(pdftex.def)             Requested size: 118.5255pt x 118.52672pt.
+
+<./images/decomposition/fish/fish_text_l0p1_q32_dx10_sig1p4_tol18.jpg, id=111, 
+390.45876pt x 390.45876pt>
+File: ./images/decomposition/fish/fish_text_l0p1_q32_dx10_sig1p4_tol18.jpg Grap
+hic file (type jpg)
+
+<use ./images/decomposition/fish/fish_text_l0p1_q32_dx10_sig1p4_tol18.jpg>
+Package pdftex.def Info: ./images/decomposition/fish/fish_text_l0p1_q32_dx10_si
+g1p4_tol18.jpg used on input line 720.
+(pdftex.def)             Requested size: 118.5255pt x 118.52672pt.
+
+<./images/decomposition/fish/fish_text_contrast_l0p1_q32_dx10_sig1p4_tol18.jpg,
+ id=112, 390.45876pt x 390.45876pt>
+File: ./images/decomposition/fish/fish_text_contrast_l0p1_q32_dx10_sig1p4_tol18
+.jpg Graphic file (type jpg)
+
+<use ./images/decomposition/fish/fish_text_contrast_l0p1_q32_dx10_sig1p4_tol18.
+jpg>
+Package pdftex.def Info: ./images/decomposition/fish/fish_text_contrast_l0p1_q3
+2_dx10_sig1p4_tol18.jpg used on input line 721.
+(pdftex.def)             Requested size: 118.5255pt x 118.52672pt.
+
+Overfull \hbox (2.26437pt too wide) in alignment at lines 711--722
+[][][] 
+ []
+
+[13]
+<./images/decomposition/Bugsbunny_FingerPrint/Bugsbunny_FingerPrint.jpg, id=118
+, 513.92pt x 513.92pt>
+File: ./images/decomposition/Bugsbunny_FingerPrint/Bugsbunny_FingerPrint.jpg Gr
+aphic file (type jpg)
+
+<use ./images/decomposition/Bugsbunny_FingerPrint/Bugsbunny_FingerPrint.jpg>
+Package pdftex.def Info: ./images/decomposition/Bugsbunny_FingerPrint/Bugsbunny
+_FingerPrint.jpg used on input line 759.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/denoising/Bugsbunny/Bugsbunny_FingerPrint_Noise.jpg, id=119, 513.92pt
+ x 513.92pt>
+File: ./images/denoising/Bugsbunny/Bugsbunny_FingerPrint_Noise.jpg Graphic file
+ (type jpg)
+
+<use ./images/denoising/Bugsbunny/Bugsbunny_FingerPrint_Noise.jpg>
+Package pdftex.def Info: ./images/denoising/Bugsbunny/Bugsbunny_FingerPrint_Noi
+se.jpg used on input line 761.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/denoising/Bugsbunny/u_plus_v.jpg, id=120, 513.92pt x 513.92pt>
+File: ./images/denoising/Bugsbunny/u_plus_v.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Bugsbunny/u_plus_v.jpg>
+Package pdftex.def Info: ./images/denoising/Bugsbunny/u_plus_v.jpg used on inpu
+t line 762.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/denoising/Bugsbunny/final_orientations.jpg, id=121, 487.8225pt x 487.
+8225pt>
+File: ./images/denoising/Bugsbunny/final_orientations.jpg Graphic file (type jp
+g)
+ <use ./images/denoising/Bugsbunny/final_orientations.jpg>
+Package pdftex.def Info: ./images/denoising/Bugsbunny/final_orientations.jpg us
+ed on input line 763.
+(pdftex.def)             Requested size: 118.5255pt x 118.52383pt.
+
+<./images/denoising/Bugsbunny/u.jpg, id=122, 513.92pt x 513.92pt>
+File: ./images/denoising/Bugsbunny/u.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Bugsbunny/u.jpg>
+Package pdftex.def Info: ./images/denoising/Bugsbunny/u.jpg used on input line 
+765.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/denoising/Bugsbunny/v.jpg, id=123, 513.92pt x 513.92pt>
+File: ./images/denoising/Bugsbunny/v.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Bugsbunny/v.jpg>
+Package pdftex.def Info: ./images/denoising/Bugsbunny/v.jpg used on input line 
+766.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/denoising/Bugsbunny/w.jpg, id=124, 513.92pt x 513.92pt>
+File: ./images/denoising/Bugsbunny/w.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Bugsbunny/w.jpg>
+Package pdftex.def Info: ./images/denoising/Bugsbunny/w.jpg used on input line 
+767.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+Underfull \hbox (badness 10000) in alignment at lines 757--768
+[][][] 
+ []
+
+[14 <./images/decomposition/Bugsbunny_texture/bugsbunny_textparabole.jpg> <./im
+ages/decomposition/Bugsbunny_texture/struct_originale.jpg> <./images/decomposit
+ion/Bugsbunny_texture/text_originale.jpg>]
+
+LaTeX Warning: Text page 15 contains only floats.
+
+
+Overfull \vbox (5.73119pt too high) has occurred while \output is active []
+
+
+[15 <./images/decomposition/Bugsbunny_texture/TVL1_lambda0p7_struct.jpg> <./ima
+ges/decomposition/Bugsbunny_texture/TVL2_mu0p9_struct.png (PNG copy)> <./images
+/decomposition/Bugsbunny_texture/TVG_mu0p8_struct.png (PNG copy)> <./images/dec
+omposition/Bugsbunny_texture/TVL1_lambda0p7_text.png (PNG copy)> <./images/deco
+mposition/Bugsbunny_texture/TVL2_mu0p9_text.png (PNG copy)> <./images/decomposi
+tion/Bugsbunny_texture/TVG_mu0p8_text.png (PNG copy)> <./images/decomposition/B
+ugsbunny_texture/TVHm1_l25_struct.jpg> <./images/decomposition/Bugsbunny_textur
+e/TVGabor_sig42_freq82_l0p07_struct.png (PNG copy)> <./images/decomposition/Bug
+sbunny_texture/Hilbert_256_la0p1_q16_dx4_sig1p5_struct.jpg> <./images/decomposi
+tion/Bugsbunny_texture/TVHm1_l25_text.jpg> <./images/decomposition/Bugsbunny_te
+xture/TVGabor_sig42_freq82_l0p07_text.png (PNG copy)> <./images/decomposition/B
+ugsbunny_texture/Hilbert_256_la0p1_q16_dx4_sig1p5_text.jpg>]
+<./images/denoising/Barbara/barbara_original.jpg, id=131, 385.44pt x 385.44pt>
+File: ./images/denoising/Barbara/barbara_original.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Barbara/barbara_original.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/barbara_original.jpg used o
+n input line 801.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/denoising/Barbara/barbara_gaussnoise_sigma0p15.jpg, id=132, 385.44pt 
+x 385.44pt>
+File: ./images/denoising/Barbara/barbara_gaussnoise_sigma0p15.jpg Graphic file 
+(type jpg)
+ <use ./images/denoising/Barbara/barbara_gaussnoise_sigma0p15.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/barbara_gaussnoise_sigma0p1
+5.jpg used on input line 802.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sig
+ma0p15_hilbert_restored.png, id=133, 513.92pt x 513.92pt>
+File: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnois
+e_sigma0p15_hilbert_restored.png Graphic file (type png)
+
+<use ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise
+_sigma0p15_hilbert_restored.png>
+Package pdftex.def Info: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol
+6/barbara_gaussnoise_sigma0p15_hilbert_restored.png used on input line 803.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sig
+ma0p15_hilbert_struct.jpg, id=134, 385.44pt x 385.44pt>
+File: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnois
+e_sigma0p15_hilbert_struct.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise
+_sigma0p15_hilbert_struct.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol
+6/barbara_gaussnoise_sigma0p15_hilbert_struct.jpg used on input line 805.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sig
+ma0p15_hilbert_text.jpg, id=135, 385.44pt x 385.44pt>
+File: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnois
+e_sigma0p15_hilbert_text.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise
+_sigma0p15_hilbert_text.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol
+6/barbara_gaussnoise_sigma0p15_hilbert_text.jpg used on input line 806.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sig
+ma0p15_hilbert_noise.jpg, id=136, 385.44pt x 385.44pt>
+File: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnois
+e_sigma0p15_hilbert_noise.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise
+_sigma0p15_hilbert_noise.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol
+6/barbara_gaussnoise_sigma0p15_hilbert_noise.jpg used on input line 807.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+Underfull \hbox (badness 10000) in alignment at lines 798--808
+[][][] 
+ []
+
+
+<./images/denoising/Barbara/TV_mu0p1/barbara_gaussnoise_TV_mu0p1_restored.jpg, 
+id=137, 385.44pt x 385.44pt>
+File: ./images/denoising/Barbara/TV_mu0p1/barbara_gaussnoise_TV_mu0p1_restored.
+jpg Graphic file (type jpg)
+
+<use ./images/denoising/Barbara/TV_mu0p1/barbara_gaussnoise_TV_mu0p1_restored.j
+pg>
+Package pdftex.def Info: ./images/denoising/Barbara/TV_mu0p1/barbara_gaussnoise
+_TV_mu0p1_restored.jpg used on input line 819.
+(pdftex.def)             Requested size: 103.70699pt x 103.70554pt.
+
+<./images/denoising/Barbara/TV_mu0p1/barbara_gaussnoise_TV_mu0p1_restored-zoom.
+jpg, id=138, 170.6375pt x 170.6375pt>
+File: ./images/denoising/Barbara/TV_mu0p1/barbara_gaussnoise_TV_mu0p1_restored-
+zoom.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Barbara/TV_mu0p1/barbara_gaussnoise_TV_mu0p1_restored-z
+oom.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/TV_mu0p1/barbara_gaussnoise
+_TV_mu0p1_restored-zoom.jpg used on input line 819.
+(pdftex.def)             Requested size: 103.70699pt x 103.70857pt.
+
+<./images/denoising/Barbara/Portilla/barbara_portilla_7x7_parent1.jpg, id=139, 
+513.92pt x 513.92pt>
+File: ./images/denoising/Barbara/Portilla/barbara_portilla_7x7_parent1.jpg Grap
+hic file (type jpg)
+
+<use ./images/denoising/Barbara/Portilla/barbara_portilla_7x7_parent1.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/Portilla/barbara_portilla_7
+x7_parent1.jpg used on input line 821.
+(pdftex.def)             Requested size: 103.70699pt x 103.7075pt.
+
+<./images/denoising/Barbara/Portilla/barbara_portilla_7x7_parent1-zoom.jpg, id=
+140, 170.6375pt x 170.6375pt>
+File: ./images/denoising/Barbara/Portilla/barbara_portilla_7x7_parent1-zoom.jpg
+ Graphic file (type jpg)
+
+<use ./images/denoising/Barbara/Portilla/barbara_portilla_7x7_parent1-zoom.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/Portilla/barbara_portilla_7
+x7_parent1-zoom.jpg used on input line 821.
+(pdftex.def)             Requested size: 103.70699pt x 103.70857pt.
+<./images/denoising/Barbara/NLmeans/NLmeans.jpg, id=141, 513.92pt x 513.92pt>
+File: ./images/denoising/Barbara/NLmeans/NLmeans.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Barbara/NLmeans/NLmeans.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/NLmeans/NLmeans.jpg used on
+ input line 823.
+(pdftex.def)             Requested size: 103.70699pt x 103.7075pt.
+
+<./images/denoising/Barbara/NLmeans/NLmeans-zoom.jpg, id=142, 170.6375pt x 170.
+6375pt>
+File: ./images/denoising/Barbara/NLmeans/NLmeans-zoom.jpg Graphic file (type jp
+g)
+ <use ./images/denoising/Barbara/NLmeans/NLmeans-zoom.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/NLmeans/NLmeans-zoom.jpg us
+ed on input line 823.
+(pdftex.def)             Requested size: 103.70699pt x 103.70857pt.
+File: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnois
+e_sigma0p15_hilbert_restored.png Graphic file (type png)
+
+<use ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise
+_sigma0p15_hilbert_restored.png>
+Package pdftex.def Info: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol
+6/barbara_gaussnoise_sigma0p15_hilbert_restored.png used on input line 825.
+(pdftex.def)             Requested size: 103.70699pt x 103.7075pt.
+
+<./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sig
+ma0p15_hilbert_restored-zoom.jpg, id=143, 170.6375pt x 170.6375pt>
+File: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnois
+e_sigma0p15_hilbert_restored-zoom.jpg Graphic file (type jpg)
+
+<use ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise
+_sigma0p15_hilbert_restored-zoom.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol
+6/barbara_gaussnoise_sigma0p15_hilbert_restored-zoom.jpg used on input line 825
+.
+(pdftex.def)             Requested size: 103.70699pt x 103.70857pt.
+
+<./images/denoising/Barbara/BM3D/barb_denoised_BM3D.png, id=144, 513.92pt x 513
+.92pt>
+File: ./images/denoising/Barbara/BM3D/barb_denoised_BM3D.png Graphic file (type
+ png)
+ <use ./images/denoising/Barbara/BM3D/barb_denoised_BM3D.png>
+Package pdftex.def Info: ./images/denoising/Barbara/BM3D/barb_denoised_BM3D.png
+ used on input line 827.
+(pdftex.def)             Requested size: 103.70699pt x 103.7075pt.
+
+<./images/denoising/Barbara/BM3D/barb_denoised_BM3D-zoom.jpg, id=145, 170.6375p
+t x 170.6375pt>
+File: ./images/denoising/Barbara/BM3D/barb_denoised_BM3D-zoom.jpg Graphic file 
+(type jpg)
+
+<use ./images/denoising/Barbara/BM3D/barb_denoised_BM3D-zoom.jpg>
+Package pdftex.def Info: ./images/denoising/Barbara/BM3D/barb_denoised_BM3D-zoo
+m.jpg used on input line 827.
+(pdftex.def)             Requested size: 103.70699pt x 103.70857pt.
+
+Overfull \hbox (2.6668pt too wide) in paragraph at lines 818--829
+ [] 
+ []
+
+[16 <./images/decomposition/fish/fish_orig.jpg> <./images/decomposition/fish/fi
+sh_struct_L2_0p40.jpg> <./images/decomposition/fish/fish_text_L2_0p40.jpg> <./i
+mages/decomposition/fish/fish_text_contrast_L2_0p40.jpg> <./images/decompositio
+n/fish/fish_struct_l0p1_q32_dx10_sig1p4_tol18.jpg> <./images/decomposition/fish
+/fish_text_l0p1_q32_dx10_sig1p4_tol18.jpg> <./images/decomposition/fish/fish_te
+xt_contrast_l0p1_q32_dx10_sig1p4_tol18.jpg>]
+<./images/inpainting/Bugsbunny/y.jpg, id=149, 513.92pt x 513.92pt>
+File: ./images/inpainting/Bugsbunny/y.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Bugsbunny/y.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/y.jpg used on input line
+ 861.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_struct
+.jpg, id=150, 513.92pt x 513.92pt>
+File: ./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_s
+truct.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_st
+ruct.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la
+0p06_mu0p1_sig1p7_struct.jpg used on input line 862.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_text.j
+pg, id=151, 513.92pt x 513.92pt>
+File: ./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_t
+ext.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_te
+xt.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la
+0p06_mu0p1_sig1p7_text.jpg used on input line 863.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Bugsbunny/reconstruct_siz15_rho0p3_tv_l0p3_rho0p3.jpg, id=
+152, 385.44pt x 385.44pt>
+File: ./images/inpainting/Bugsbunny/reconstruct_siz15_rho0p3_tv_l0p3_rho0p3.jpg
+ Graphic file (type jpg)
+
+<use ./images/inpainting/Bugsbunny/reconstruct_siz15_rho0p3_tv_l0p3_rho0p3.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/reconstruct_siz15_rho0p3
+_tv_l0p3_rho0p3.jpg used on input line 867.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_inpain
+ted.jpg, id=153, 513.92pt x 513.92pt>
+File: ./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_i
+npainted.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_in
+painted.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la
+0p06_mu0p1_sig1p7_inpainted.jpg used on input line 868.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+Overfull \hbox (32.8185pt too wide) in alignment at lines 865--869
+[] [] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17 <./images/decomposition/Bugsbunny_FingerPrint/Bugsbunny_FingerPrint.jpg> <
+./images/denoising/Bugsbunny/Bugsbunny_FingerPrint_Noise.jpg> <./images/denoisi
+ng/Bugsbunny/u_plus_v.jpg> <./images/denoising/Bugsbunny/final_orientations.jpg
+> <./images/denoising/Bugsbunny/u.jpg> <./images/denoising/Bugsbunny/v.jpg> <./
+images/denoising/Bugsbunny/w.jpg>]
+<./images/inpainting/Barbara/y.jpg, id=157, 513.92pt x 513.92pt>
+File: ./images/inpainting/Barbara/y.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/y.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/y.jpg used on input line 8
+88.
+(pdftex.def)             Requested size: 100.00519pt x 99.99834pt.
+
+<./images/inpainting/Barbara/y_zoom2.jpg, id=158, 121.45375pt x 120.45pt>
+File: ./images/inpainting/Barbara/y_zoom2.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/y_zoom2.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/y_zoom2.jpg used on input 
+line 888.
+(pdftex.def)             Requested size: 100.00519pt x 99.17764pt.
+
+<./images/inpainting/Barbara/y_zoom.jpg, id=159, 180.675pt x 180.675pt>
+File: ./images/inpainting/Barbara/y_zoom.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/y_zoom.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/y_zoom.jpg used on input l
+ine 888.
+(pdftex.def)             Requested size: 100.00519pt x 100.00563pt.
+
+<./images/inpainting/Barbara/TV.jpg, id=160, 513.92pt x 513.92pt>
+File: ./images/inpainting/Barbara/TV.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/TV.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/TV.jpg used on input line 
+890.
+(pdftex.def)             Requested size: 100.00519pt x 99.99834pt.
+
+<./images/inpainting/Barbara/TV_zoom2.jpg, id=161, 121.45375pt x 120.45pt>
+File: ./images/inpainting/Barbara/TV_zoom2.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/TV_zoom2.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/TV_zoom2.jpg used on input
+ line 890.
+(pdftex.def)             Requested size: 100.00519pt x 99.17764pt.
+
+<./images/inpainting/Barbara/TV_zoom.jpg, id=162, 180.675pt x 180.675pt>
+File: ./images/inpainting/Barbara/TV_zoom.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/TV_zoom.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/TV_zoom.jpg used on input 
+line 890.
+(pdftex.def)             Requested size: 100.00519pt x 100.00563pt.
+
+Overfull \hbox (2.5427pt too wide) in paragraph at lines 892--892
+ \OT1/cmr/m/n/10 Patch- 
+ []
+
+
+Overfull \hbox (1.65382pt too wide) in paragraph at lines 892--892
+ \OT1/cmr/m/n/10 Works| 
+ []
+
+<./images/inpainting/Barbara/Perez.jpg, id=163, 30.8352pt x 30.8352pt>
+File: ./images/inpainting/Barbara/Perez.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/Perez.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/Perez.jpg used on input li
+ne 892.
+(pdftex.def)             Requested size: 100.00519pt x 100.02779pt.
+
+<./images/inpainting/Barbara/Perez_zoom2.jpg, id=164, 121.45375pt x 120.45pt>
+File: ./images/inpainting/Barbara/Perez_zoom2.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/Perez_zoom2.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/Perez_zoom2.jpg used on in
+put line 892.
+(pdftex.def)             Requested size: 100.00519pt x 99.17764pt.
+
+<./images/inpainting/Barbara/Perez_zoom.jpg, id=165, 180.675pt x 180.675pt>
+File: ./images/inpainting/Barbara/Perez_zoom.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/Perez_zoom.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/Perez_zoom.jpg used on inp
+ut line 892.
+(pdftex.def)             Requested size: 100.00519pt x 100.00563pt.
+
+<./images/inpainting/Barbara/MCA.jpg, id=166, 513.92pt x 513.92pt>
+File: ./images/inpainting/Barbara/MCA.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/MCA.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/MCA.jpg used on input line
+ 894.
+(pdftex.def)             Requested size: 100.00519pt x 99.99834pt.
+
+<./images/inpainting/Barbara/MCA_zoom2.jpg, id=167, 121.45375pt x 120.45pt>
+File: ./images/inpainting/Barbara/MCA_zoom2.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/MCA_zoom2.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/MCA_zoom2.jpg used on inpu
+t line 894.
+(pdftex.def)             Requested size: 100.00519pt x 99.17764pt.
+
+<./images/inpainting/Barbara/MCA_zoom.jpg, id=168, 180.675pt x 180.675pt>
+File: ./images/inpainting/Barbara/MCA_zoom.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/MCA_zoom.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/MCA_zoom.jpg used on input
+ line 894.
+(pdftex.def)             Requested size: 100.00519pt x 100.00563pt.
+
+Overfull \hbox (7.12608pt too wide) in paragraph at lines 896--896
+ \OT1/cmr/m/n/10 method| 
+ []
+
+<./images/inpainting/Barbara/Hilbert.jpg, id=169, 513.92pt x 513.92pt>
+File: ./images/inpainting/Barbara/Hilbert.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/Hilbert.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/Hilbert.jpg used on input 
+line 896.
+(pdftex.def)             Requested size: 100.00519pt x 99.99834pt.
+
+<./images/inpainting/Barbara/Hilbert_zoom2.jpg, id=170, 121.45375pt x 120.45pt>
+File: ./images/inpainting/Barbara/Hilbert_zoom2.jpg Graphic file (type jpg)
+<use ./images/inpainting/Barbara/Hilbert_zoom2.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/Hilbert_zoom2.jpg used on 
+input line 896.
+(pdftex.def)             Requested size: 100.00519pt x 99.17764pt.
+
+<./images/inpainting/Barbara/Hilbert_zoom.jpg, id=171, 180.675pt x 180.675pt>
+File: ./images/inpainting/Barbara/Hilbert_zoom.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Barbara/Hilbert_zoom.jpg>
+Package pdftex.def Info: ./images/inpainting/Barbara/Hilbert_zoom.jpg used on i
+nput line 896.
+(pdftex.def)             Requested size: 100.00519pt x 100.00563pt.
+
+Overfull \hbox (3.56139pt too wide) in paragraph at lines 887--898
+ [] 
+ []
+
+[18 <./images/denoising/Barbara/barbara_original.jpg> <./images/denoising/Barba
+ra/barbara_gaussnoise_sigma0p15.jpg> <./images/denoising/Barbara/Hilbert_0p15_m
+u5_sig2p2_tol6/barbara_gaussnoise_sigma0p15_hilbert_restored.png (PNG copy)> <.
+/images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sigma
+0p15_hilbert_struct.jpg> <./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_to
+l6/barbara_gaussnoise_sigma0p15_hilbert_text.jpg> <./images/denoising/Barbara/H
+ilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sigma0p15_hilbert_noise.jpg>]
+
+LaTeX Warning: Text page 19 contains only floats.
+
+
+Overfull \vbox (5.31555pt too high) has occurred while \output is active []
+
+
+[19 <./images/denoising/Barbara/TV_mu0p1/barbara_gaussnoise_TV_mu0p1_restored.j
+pg> <./images/denoising/Barbara/TV_mu0p1/barbara_gaussnoise_TV_mu0p1_restored-z
+oom.jpg> <./images/denoising/Barbara/Portilla/barbara_portilla_7x7_parent1.jpg>
+ <./images/denoising/Barbara/Portilla/barbara_portilla_7x7_parent1-zoom.jpg> <.
+/images/denoising/Barbara/NLmeans/NLmeans.jpg> <./images/denoising/Barbara/NLme
+ans/NLmeans-zoom.jpg> <./images/denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/
+barbara_gaussnoise_sigma0p15_hilbert_restored-zoom.jpg> <./images/denoising/Bar
+bara/BM3D/barb_denoised_BM3D.png (PNG copy)> <./images/denoising/Barbara/BM3D/b
+arb_denoised_BM3D-zoom.jpg>] [20 <./images/inpainting/Bugsbunny/y.jpg> <./image
+s/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_struct.jpg> <.
+/images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_text.jpg
+> <./images/inpainting/Bugsbunny/reconstruct_siz15_rho0p3_tv_l0p3_rho0p3.jpg> <
+./images/inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_inpaint
+ed.jpg>]
+
+LaTeX Warning: Text page 21 contains only floats.
+
+[21 <./images/inpainting/Barbara/y.jpg> <./images/inpainting/Barbara/y_zoom2.jp
+g> <./images/inpainting/Barbara/y_zoom.jpg> <./images/inpainting/Barbara/TV.jpg
+> <./images/inpainting/Barbara/TV_zoom2.jpg> <./images/inpainting/Barbara/TV_zo
+om.jpg> <./images/inpainting/Barbara/Perez.jpg> <./images/inpainting/Barbara/Pe
+rez_zoom2.jpg> <./images/inpainting/Barbara/Perez_zoom.jpg> <./images/inpaintin
+g/Barbara/MCA.jpg> <./images/inpainting/Barbara/MCA_zoom2.jpg> <./images/inpain
+ting/Barbara/MCA_zoom.jpg> <./images/inpainting/Barbara/Hilbert.jpg> <./images/
+inpainting/Barbara/Hilbert_zoom2.jpg> <./images/inpainting/Barbara/Hilbert_zoom
+.jpg>] <./images/convex_nonconvex/y_sans_h.png, id=185, 256.96pt x 256.96pt>
+File: ./images/convex_nonconvex/y_sans_h.png Graphic file (type png)
+
+<use ./images/convex_nonconvex/y_sans_h.png>
+Package pdftex.def Info: ./images/convex_nonconvex/y_sans_h.png used on input l
+ine 967.
+(pdftex.def)             Requested size: 118.5255pt x 118.52454pt.
+
+<./images/convex_nonconvex/convex.png, id=186, 256.96pt x 256.96pt>
+File: ./images/convex_nonconvex/convex.png Graphic file (type png)
+
+<use ./images/convex_nonconvex/convex.png>
+Package pdftex.def Info: ./images/convex_nonconvex/convex.png used on input lin
+e 968.
+(pdftex.def)             Requested size: 118.5255pt x 118.52454pt.
+
+<./images/convex_nonconvex/nonconvex.png, id=187, 256.96pt x 256.96pt>
+File: ./images/convex_nonconvex/nonconvex.png Graphic file (type png)
+
+<use ./images/convex_nonconvex/nonconvex.png>
+Package pdftex.def Info: ./images/convex_nonconvex/nonconvex.png used on input 
+line 969.
+(pdftex.def)             Requested size: 118.5255pt x 118.52454pt.
+
+<./images/gamma_vs_chi/gamma.png, id=188, 603.25375pt x 451.6875pt>
+File: ./images/gamma_vs_chi/gamma.png Graphic file (type png)
+
+<use ./images/gamma_vs_chi/gamma.png>
+Package pdftex.def Info: ./images/gamma_vs_chi/gamma.png used on input line 101
+8.
+(pdftex.def)             Requested size: 148.15123pt x 110.92285pt.
+
+<./images/gamma_vs_chi/chi.png, id=189, 602.25pt x 451.6875pt>
+File: ./images/gamma_vs_chi/chi.png Graphic file (type png)
+
+<use ./images/gamma_vs_chi/chi.png>
+Package pdftex.def Info: ./images/gamma_vs_chi/chi.png used on input line 1019.
+
+(pdftex.def)             Requested size: 148.15123pt x 111.11583pt.
+ [22 <./images/convex_nonconvex/y_sans_h.png (PNG copy)> <./images/convex_nonco
+nvex/convex.png (PNG copy)> <./images/convex_nonconvex/nonconvex.png (PNG copy)
+>] [23 <./images/gamma_vs_chi/gamma.png> <./images/gamma_vs_chi/chi.png>]
+<./images/convex_nonconvex/y_avec_h.png, id=196, 256.96pt x 256.96pt>
+File: ./images/convex_nonconvex/y_avec_h.png Graphic file (type png)
+
+<use ./images/convex_nonconvex/y_avec_h.png>
+Package pdftex.def Info: ./images/convex_nonconvex/y_avec_h.png used on input l
+ine 1075.
+(pdftex.def)             Requested size: 88.89412pt x 88.89438pt.
+
+<./images/convex_nonconvex/v_sans_h.png, id=197, 256.96pt x 256.96pt>
+File: ./images/convex_nonconvex/v_sans_h.png Graphic file (type png)
+
+<use ./images/convex_nonconvex/v_sans_h.png>
+Package pdftex.def Info: ./images/convex_nonconvex/v_sans_h.png used on input l
+ine 1076.
+(pdftex.def)             Requested size: 88.89412pt x 88.89438pt.
+
+<./images/convex_nonconvex/v_avec_h.png, id=198, 256.96pt x 256.96pt>
+File: ./images/convex_nonconvex/v_avec_h.png Graphic file (type png)
+
+<use ./images/convex_nonconvex/v_avec_h.png>
+Package pdftex.def Info: ./images/convex_nonconvex/v_avec_h.png used on input l
+ine 1077.
+(pdftex.def)             Requested size: 88.89412pt x 88.89438pt.
+
+<./images/convex_nonconvex/hv_avec_h.png, id=199, 256.96pt x 256.96pt>
+File: ./images/convex_nonconvex/hv_avec_h.png Graphic file (type png)
+
+<use ./images/convex_nonconvex/hv_avec_h.png>
+Package pdftex.def Info: ./images/convex_nonconvex/hv_avec_h.png used on input 
+line 1078.
+(pdftex.def)             Requested size: 88.89412pt x 88.89438pt.
+
+Overfull \hbox (2.26434pt too wide) in paragraph at lines 1073--1080
+ [] 
+ []
+
+<./images/examples_h/plot_h_identity.png, id=200, 362.35374pt x 371.3875pt>
+File: ./images/examples_h/plot_h_identity.png Graphic file (type png)
+
+<use ./images/examples_h/plot_h_identity.png>
+Package pdftex.def Info: ./images/examples_h/plot_h_identity.png used on input 
+line 1123.
+(pdftex.def)             Requested size: 88.89412pt x 91.1069pt.
+
+<./images/examples_h/plot_h_a0p3_b0.png, id=201, 364.36125pt x 369.38pt>
+File: ./images/examples_h/plot_h_a0p3_b0.png Graphic file (type png)
+
+<use ./images/examples_h/plot_h_a0p3_b0.png>
+Package pdftex.def Info: ./images/examples_h/plot_h_a0p3_b0.png used on input l
+ine 1124.
+(pdftex.def)             Requested size: 88.89412pt x 90.11844pt.
+
+<./images/examples_h/plot_h_a0p1_bm0p5.png, id=202, 357.335pt x 366.36874pt>
+File: ./images/examples_h/plot_h_a0p1_bm0p5.png Graphic file (type png)
+
+<use ./images/examples_h/plot_h_a0p1_bm0p5.png>
+Package pdftex.def Info: ./images/examples_h/plot_h_a0p1_bm0p5.png used on inpu
+t line 1126.
+(pdftex.def)             Requested size: 88.89412pt x 91.13913pt.
+
+<./images/examples_h/plot_h_a2_b0.png, id=203, 363.3575pt x 369.38pt>
+File: ./images/examples_h/plot_h_a2_b0.png Graphic file (type png)
+
+<use ./images/examples_h/plot_h_a2_b0.png>
+Package pdftex.def Info: ./images/examples_h/plot_h_a2_b0.png used on input lin
+e 1127.
+(pdftex.def)             Requested size: 88.89412pt x 90.36642pt.
+
+<./images/examples_h/sinusoidal.png, id=204, 257.96375pt x 257.96375pt>
+File: ./images/examples_h/sinusoidal.png Graphic file (type png)
+
+<use ./images/examples_h/sinusoidal.png>
+Package pdftex.def Info: ./images/examples_h/sinusoidal.png used on input line 
+1130.
+(pdftex.def)             Requested size: 88.89412pt x 88.8913pt.
+
+<./images/examples_h/h_a0p3_b0.png, id=205, 257.96375pt x 257.96375pt>
+File: ./images/examples_h/h_a0p3_b0.png Graphic file (type png)
+
+<use ./images/examples_h/h_a0p3_b0.png>
+Package pdftex.def Info: ./images/examples_h/h_a0p3_b0.png used on input line 1
+131.
+(pdftex.def)             Requested size: 88.89412pt x 88.8913pt.
+
+<./images/examples_h/h_a0p1_bm0p5.png, id=206, 257.96375pt x 257.96375pt>
+File: ./images/examples_h/h_a0p1_bm0p5.png Graphic file (type png)
+
+<use ./images/examples_h/h_a0p1_bm0p5.png>
+Package pdftex.def Info: ./images/examples_h/h_a0p1_bm0p5.png used on input lin
+e 1133.
+(pdftex.def)             Requested size: 88.89412pt x 88.8913pt.
+
+<./images/examples_h/h_a2_b0.png, id=207, 257.96375pt x 257.96375pt>
+File: ./images/examples_h/h_a2_b0.png Graphic file (type png)
+
+<use ./images/examples_h/h_a2_b0.png>
+Package pdftex.def Info: ./images/examples_h/h_a2_b0.png used on input line 113
+4.
+(pdftex.def)             Requested size: 88.89412pt x 88.8913pt.
+
+Overfull \hbox (2.26434pt too wide) in paragraph at lines 1121--1136
+ [] 
+ []
+
+[24 <./images/convex_nonconvex/y_avec_h.png (PNG copy)> <./images/convex_noncon
+vex/v_sans_h.png (PNG copy)> <./images/convex_nonconvex/v_avec_h.png> <./images
+/convex_nonconvex/hv_avec_h.png>] [25 <./images/examples_h/plot_h_identity.png>
+ <./images/examples_h/plot_h_a0p3_b0.png> <./images/examples_h/plot_h_a0p1_bm0p
+5.png> <./images/examples_h/plot_h_a2_b0.png> <./images/examples_h/sinusoidal.p
+ng (PNG copy)> <./images/examples_h/h_a0p3_b0.png (PNG copy)> <./images/example
+s_h/h_a0p1_bm0p5.png (PNG copy)> <./images/examples_h/h_a2_b0.png (PNG copy)>]
+<./images/inpainting/Bugsbunny/non_cvxe/y.jpg, id=220, 256.96pt x 256.96pt>
+File: ./images/inpainting/Bugsbunny/non_cvxe/y.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Bugsbunny/non_cvxe/y.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/non_cvxe/y.jpg used on i
+nput line 1270.
+(pdftex.def)             Requested size: 118.5255pt x 118.52454pt.
+
+<./images/inpainting/Bugsbunny/non_cvxe/u_plus_hv.jpg, id=221, 256.96pt x 256.9
+6pt>
+File: ./images/inpainting/Bugsbunny/non_cvxe/u_plus_hv.jpg Graphic file (type j
+pg)
+ <use ./images/inpainting/Bugsbunny/non_cvxe/u_plus_hv.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/non_cvxe/u_plus_hv.jpg u
+sed on input line 1271.
+(pdftex.def)             Requested size: 118.5255pt x 118.52454pt.
+
+Overfull \hbox (20.50903pt too wide) in alignment at lines 1268--1272
+[][] 
+ []
+
+<./images/inpainting/Bugsbunny/non_cvxe/u.jpg, id=222, 256.96pt x 256.96pt>
+File: ./images/inpainting/Bugsbunny/non_cvxe/u.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Bugsbunny/non_cvxe/u.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/non_cvxe/u.jpg used on i
+nput line 1275.
+(pdftex.def)             Requested size: 118.5255pt x 118.52454pt.
+
+<./images/inpainting/Bugsbunny/non_cvxe/v.jpg, id=223, 256.96pt x 256.96pt>
+File: ./images/inpainting/Bugsbunny/non_cvxe/v.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Bugsbunny/non_cvxe/v.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/non_cvxe/v.jpg used on i
+nput line 1276.
+(pdftex.def)             Requested size: 118.5255pt x 118.52454pt.
+
+<./images/inpainting/Bugsbunny/non_cvxe/hv.jpg, id=224, 256.96pt x 256.96pt>
+File: ./images/inpainting/Bugsbunny/non_cvxe/hv.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Bugsbunny/non_cvxe/hv.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/non_cvxe/hv.jpg used on 
+input line 1277.
+(pdftex.def)             Requested size: 118.5255pt x 118.52454pt.
+File: ./images/inpainting/Bugsbunny/non_cvxe/y.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Bugsbunny/non_cvxe/y.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/non_cvxe/y.jpg used on i
+nput line 1289.
+(pdftex.def)             Requested size: 118.5255pt x 118.52454pt.
+File: ./images/inpainting/Bugsbunny/non_cvxe/u_plus_hv.jpg Graphic file (type j
+pg)
+
+<use ./images/inpainting/Bugsbunny/non_cvxe/u_plus_hv.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/non_cvxe/u_plus_hv.jpg u
+sed on input line 1290.
+(pdftex.def)             Requested size: 118.5255pt x 118.52454pt.
+
+<./images/inpainting/Bugsbunny/non_cvxe/bugs2_patch.jpg, id=225, 30.8352pt x 30
+.8352pt>
+File: ./images/inpainting/Bugsbunny/non_cvxe/bugs2_patch.jpg Graphic file (type
+ jpg)
+ <use ./images/inpainting/Bugsbunny/non_cvxe/bugs2_patch.jpg>
+Package pdftex.def Info: ./images/inpainting/Bugsbunny/non_cvxe/bugs2_patch.jpg
+ used on input line 1291.
+(pdftex.def)             Requested size: 118.5255pt x 118.55211pt.
+ [26]
+[27 <./images/inpainting/Bugsbunny/non_cvxe/y.jpg> <./images/inpainting/Bugsbun
+ny/non_cvxe/u_plus_hv.jpg> <./images/inpainting/Bugsbunny/non_cvxe/u.jpg> <./im
+ages/inpainting/Bugsbunny/non_cvxe/v.jpg> <./images/inpainting/Bugsbunny/non_cv
+xe/hv.jpg> <./images/inpainting/Bugsbunny/non_cvxe/bugs2_patch.jpg>]
+<./images/inpainting/Desert/desert_M.jpg, id=232, 513.92pt x 513.92pt>
+File: ./images/inpainting/Desert/desert_M.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Desert/desert_M.jpg>
+Package pdftex.def Info: ./images/inpainting/Desert/desert_M.jpg used on input 
+line 1304.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Desert/desert_y.jpg, id=233, 513.92pt x 513.92pt>
+File: ./images/inpainting/Desert/desert_y.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Desert/desert_y.jpg>
+Package pdftex.def Info: ./images/inpainting/Desert/desert_y.jpg used on input 
+line 1308.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Desert/desert_u_plus_hv_ha2.jpg, id=234, 513.92pt x 513.92
+pt>
+File: ./images/inpainting/Desert/desert_u_plus_hv_ha2.jpg Graphic file (type jp
+g)
+ <use ./images/inpainting/Desert/desert_u_plus_hv_ha2.jpg>
+Package pdftex.def Info: ./images/inpainting/Desert/desert_u_plus_hv_ha2.jpg us
+ed on input line 1309.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Desert/desert_amplitudes_ha2.jpg, id=235, 513.92pt x 513.9
+2pt>
+File: ./images/inpainting/Desert/desert_amplitudes_ha2.jpg Graphic file (type j
+pg)
+ <use ./images/inpainting/Desert/desert_amplitudes_ha2.jpg>
+Package pdftex.def Info: ./images/inpainting/Desert/desert_amplitudes_ha2.jpg u
+sed on input line 1310.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Desert/desert_u_ha2.jpg, id=236, 513.92pt x 513.92pt>
+File: ./images/inpainting/Desert/desert_u_ha2.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Desert/desert_u_ha2.jpg>
+Package pdftex.def Info: ./images/inpainting/Desert/desert_u_ha2.jpg used on in
+put line 1312.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Desert/desert_v_ha2.jpg, id=237, 513.92pt x 513.92pt>
+File: ./images/inpainting/Desert/desert_v_ha2.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Desert/desert_v_ha2.jpg>
+Package pdftex.def Info: ./images/inpainting/Desert/desert_v_ha2.jpg used on in
+put line 1313.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Desert/desert_hv_ha2.jpg, id=238, 513.92pt x 513.92pt>
+File: ./images/inpainting/Desert/desert_hv_ha2.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Desert/desert_hv_ha2.jpg>
+Package pdftex.def Info: ./images/inpainting/Desert/desert_hv_ha2.jpg used on i
+nput line 1314.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+ [28 <./images/inpainting/Desert/desert_M.jpg> <./images/inpainting/Desert/dese
+rt_y.jpg> <./images/inpainting/Desert/desert_u_plus_hv_ha2.jpg> <./images/inpai
+nting/Desert/desert_amplitudes_ha2.jpg> <./images/inpainting/Desert/desert_u_ha
+2.jpg> <./images/inpainting/Desert/desert_v_ha2.jpg> <./images/inpainting/Deser
+t/desert_hv_ha2.jpg>]
+File: ./images/inpainting/Desert/desert_y.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Desert/desert_y.jpg>
+Package pdftex.def Info: ./images/inpainting/Desert/desert_y.jpg used on input 
+line 1329.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+File: ./images/inpainting/Desert/desert_u_plus_hv_ha2.jpg Graphic file (type jp
+g)
+
+<use ./images/inpainting/Desert/desert_u_plus_hv_ha2.jpg>
+Package pdftex.def Info: ./images/inpainting/Desert/desert_u_plus_hv_ha2.jpg us
+ed on input line 1330.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+
+<./images/inpainting/Desert/desert_patch.jpg, id=242, 385.44pt x 385.44pt>
+File: ./images/inpainting/Desert/desert_patch.jpg Graphic file (type jpg)
+
+<use ./images/inpainting/Desert/desert_patch.jpg>
+Package pdftex.def Info: ./images/inpainting/Desert/desert_patch.jpg used on in
+put line 1331.
+(pdftex.def)             Requested size: 118.5255pt x 118.52061pt.
+ [29 <./images/inpainting/Desert/desert_patch.jpg>]
+Overfull \hbox (0.47433pt too wide) in paragraph at lines 1468--1470
+\OT1/cmr/m/n/10 If the gra-di-ent step size sat-is-fies $\OML/cmm/m/it/10 ^^W <
+ \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 =\OMS/cmsy/m/n/10 j j\OML/cmm/m/it/10 QQ[]\O
+MS/cmsy/m/n/10 j j$\OT1/cmr/m/n/10 , then $\OML/cmm/m/it/10 g \OMS/cmsy/m/n/10 
+^^@ \OML/cmm/m/it/10 !Q[]p[]$ \OT1/cmr/m/n/10 con-verges to $[][](\OML/cmm/m/it
+/10 g\OT1/cmr/m/n/10 )$. 
+ []
+
+(./MaurelAujolPeyre-SIIS.bbl [30]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [31])
+[32] (./MaurelAujolPeyre-SIIS.aux) ) 
+Here is how much of TeX's memory you used:
+ 3480 strings out of 493014
+ 64582 string characters out of 6133351
+ 109256 words of memory out of 5000000
+ 6836 multiletter control sequences out of 15000+600000
+ 11222 words of font info for 43 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 37i,16n,28p,1392b,362s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2016/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
+/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
+msy5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+y6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7
+.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.p
+fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pf
+b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb>
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pf
+b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7
+.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
+bm10.pfb>
+Output written on MaurelAujolPeyre-SIIS.pdf (32 pages, 4199348 bytes).
+PDF statistics:
+ 338 PDF objects out of 1000 (max. 8388607)
+ 159 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 531 words of extra memory for PDF output out of 10000 (max. 10000000)
+

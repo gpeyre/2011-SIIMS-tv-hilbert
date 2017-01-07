@@ -1,0 +1,250 @@
+\begin{thebibliography}{10}
+
+\bibitem{arias2009variational}
+{\sc P.~Arias, V.~Caselles, and G.~Sapiro}, {\em {A variational framework for
+  non-local image inpainting}}, in Energy Minimization Methods in Computer
+  Vision and Pattern Recognition, Springer, 2009, pp.~345--358.
+
+\bibitem{aujol-algo}
+{\sc J.-F. Aujol}, {\em Some first-order algorithms for total variation based
+  image restoration}, J. Math. Imaging Vis., 34-3 (2009), pp.~307--327.
+
+\bibitem{aujol-decomposition}
+{\sc J.-F. Aujol, G.~Aubert, L.~Blanc-Feraud, and A.~Chambolle}, {\em Image
+  decomposition into a bounded variation component and an oscillating
+  component}, Journal of Mathematical Imaging and Vision, 22 (2005),
+  pp.~71--88.
+
+\bibitem{Aujol05}
+{\sc J.-F. Aujol and A.~Chambolle}, {\em Dual norms and image decomposition
+  models}, International Journal of Computer Vision, 63 (2005), pp.~85--104.
+
+\bibitem{aujol-constrained}
+{\sc J.-F. Aujol and G.~Gilboa}, {\em Constrained and {S}{N}{R}-based solutions
+  for tv-hilbert space image denoising}, J. Math. Imaging Vis., 26 (2006),
+  pp.~217--237.
+
+\bibitem{aujol-tv-hilbert}
+{\sc J.-F. Aujol, G.~Gilboa, T.~Chan, and S.~Osher}, {\em Structure-texture
+  image decomposition--modeling, algorithms, and parameter selection},
+  International Journal of Computer Vision, 67 (2006), pp.~111--136.
+
+\bibitem{AujolKang}
+{\sc J.-F. Aujol and S.~H. Kang}, {\em Color image decomposition and
+  restoration}, Journal of Visual Communication and Image Representation, 17
+  (2006), pp.~916--928.
+
+\bibitem{aujol-variational-exemplar-based}
+{\sc J.-F. {A}ujol, S.~{L}adjal, and S.~{M}asnou}, {\em {E}xemplar-based
+  inpainting from a variational point of view}, SIAM Journal on Mathematical
+  Analysis, 42 (2010), pp.~1246--1285.
+
+\bibitem{bect-chambolle-iterative}
+{\sc J.~Bect, L.~Blanc~F\'eraud, G.~Aubert, and A.~Chambolle}, {\em A
+  $\ell_1$-unified variational framework for image restoration}, in Proc. of
+  ECCV04, Springer-Verlag, 2004, pp.~Vol IV: 1--13.
+
+\bibitem{bertalmio-inpainting}
+{\sc M.~Bertalmio, G.~Sapiro, V.~Caselles, and C.~Ballester}, {\em Image
+  inpainting}, in Siggraph 2000, 2000, pp.~417--424.
+
+\bibitem{Bertalmio03simultaneousstructure}
+{\sc M.~Bertalmio, L.~Vese, G.~Sapiro, and S.~Osher}, {\em Simultaneous
+  structure and texture image inpainting}, IEEE Transactions on Image
+  Processing, 12 (2003), pp.~882--889.
+
+\bibitem{Bresson}
+{\sc X.~Bresson and T.~Chan}, {\em Fast minimization of the vectorial total
+  variation norm and applications to color image processing}, Inverse Problems
+  and Imaging, 2 (2008), pp.~455--484.
+
+\bibitem{buades-nl-means}
+{\sc A.~Buades, B.~Coll, and J.~M. Morel}, {\em On image denoising methods},
+  SIAM Multiscale Modeling and Simulation, To Appear,  (2005).
+
+\bibitem{candes-tight-frame}
+{\sc E.~Cand\`es and D.~Donoho}, {\em New tight frames of curvelets and optimal
+  representations of objects with piecewise {$\text{C}^2$} singularities},
+  Comm. Pure Appl. Math., 57 (2004), pp.~219--266.
+
+\bibitem{candes-discrete-curvelet}
+{\sc E.~J. Cand{\`e}s, L.~Demanet, D.~L. Donoho, and L.~Ying}, {\em Fast
+  discrete curvelet transforms}, Multiscale Model. Simul, 5 (2005),
+  pp.~861--899.
+
+\bibitem{cao2009geometrically}
+{\sc F.~Cao, Y.~Gousseau, S.~Masnou, and P.~P{\'e}rez}, {\em {Geometrically
+  guided exemplar-based inpainting}}, Preprint hal-00392018,  (2009).
+
+\bibitem{chambolle-algo-tv}
+{\sc A.~Chambolle}, {\em An algorithm for total variation minimization and
+  applications}, J. Math. Imaging Vis., 20 (2004), pp.~89--97.
+
+\bibitem{ChambollePock}
+{\sc A.~Chambolle and T.~Pock}, {\em A first-order primal-dual algorithm for
+  convex problems with applications to imaging}, Hal-00490826,
+  http://hal.archives-ouvertes.fr/hal-00490826$\_$v1/,  (2010).
+
+\bibitem{chan-shen-tv-inpainting}
+{\sc T.~Chan and J.~Shen}, {\em Mathematical models for local nontexture
+  inpaintings}, SIAM J. Appl. Math, 62 (2002), pp.~1019--1043.
+
+\bibitem{Kang00}
+{\sc Tony~F. Chan, Sung~Ha Kang, and Jianhong Shen}, {\em Total variation
+  denoising and enhancement of color images based on the {CB} and {HSV} color
+  models}, Journal of Visual Communication and Image Representation, 12 (2000),
+  p.~2001.
+
+\bibitem{combettes-splitting}
+{\sc P.~L. Combettes and V.~R. Wajs}, {\em Signal recovery by proximal
+  forward-backward splitting}, Multiscale Modeling \& Simulation, 4 (2005),
+  pp.~1168--1200.
+
+\bibitem{criminisi-inpainting}
+{\sc A.~Criminisi, P.~Perez, and K.~Toyama}, {\em Region filling and object
+  removal by exemplar-based image inpainting}, IEEE Trans. Image Processing, 13
+  (2004), pp.~1200--1212.
+
+\bibitem{dabov-bm3d}
+{\sc K.~Dabov, A.~Foi, V.~Katkovnik, and K.~Egiazarian}, {\em Image denoising
+  by sparse 3d transform-domain collaborative filtering}, IEEE Trans. Image
+  Proc., 16 (2007).
+
+\bibitem{Daub_Teschke}
+{\sc I.~Daubechies and G.~Tescke}, {\em Variational image restoration by means
+  of wavelets: simultaneous decomposition, deblurring and denoising}, Appl.
+  Comp. Harm. Anal., 19 (2005), pp.~1--16.
+
+\bibitem{Daub_Tescke_Vese}
+{\sc I.~Daubechies, G.~Tescke, and L.~Vese}, {\em On some iterative concepts
+  for image restoration}, Advances in Imaging and Electronics, 150 (2008),
+  pp.~2--52.
+
+\bibitem{donoho-shrinkage}
+{\sc D.~Donoho and I.~Johnstone}, {\em Ideal spatial adaptation via wavelet
+  shrinkage}, Biometrika, 81 (1994), pp.~425--455.
+
+\bibitem{drori-siggraph}
+{\sc I.~Drori, D.~Cohen-Or, and H.~Yeshurun}, {\em Fragment-based image
+  completion}, ACM Transactions on Graphics, 22 (2003), pp.~303--312.
+
+\bibitem{DuvalAujolGousseau}
+{\sc V.~Duval, J.-F. Aujol, and Y.~Gousseau}, {\em The {TVL1} model: a
+  geometric point of view}, SIAM Journal on Multiscale Modeling and Simulation,
+  8 (2009), pp.~154--189.
+
+\bibitem{DuvalAujolVese}
+{\sc V.~Duval, J.-F. Aujol, and L.~A. Vese}, {\em Mathematical modeling of
+  textures : application to color image decomposition with a projected gradient
+  algorithm}, Journal of Mathematical Imaging and Vision, 37 (2010),
+  pp.~232--248.
+
+\bibitem{efros-nonparam-sampling}
+{\sc A.~A. Efros and T.~K. Leung}, {\em Texture synthesis by non-parametric
+  sampling}, in ICCV '99, 1999, p.~1033.
+
+\bibitem{mca-inpainting}
+{\sc M.~Elad, J.~Starck, P.~Querre, and D.~Donoho}, {\em Simultaneous cartoon
+  and texture image inpainting using morphological component analysis
+  ({M}{C}{A})}, Applied and Computational Harmonic Analysis, 19 (2005),
+  pp.~340--358.
+
+\bibitem{fadili-inpainting2}
+{\sc M.J. Fadili, J.-L. Starck, and F.~Murtagh}, {\em Inpainting and zooming
+  using sparse representations}, The Computer Journal,  (2006).
+\newblock submitted.
+
+\bibitem{Kim_Vese}
+{\sc Y.~Kim and L.~Vese}, {\em Image recovery using functions of bounded
+  variation and sobolev spaces of negative differentiability}, Inverse problems
+  and Imaging, 3 (2009), pp.~43--68.
+
+\bibitem{komodakis2006image}
+{\sc N.~Komodakis}, {\em Image completion using global optimization}, in CVPR,
+  IEEE Computer Society, 2006, pp.~442--452.
+
+\bibitem{kwatra-siggraph}
+{\sc V.~Kwatra, I.~Essa, A.~Bobick, and N.~Kwatra}, {\em Texture optimization
+  for example-based synthesis}, ACM Transactions on Graphics, 24 (2005),
+  pp.~795--802.
+
+\bibitem{Le05bandeletimage}
+{\sc E.~Le, Pennec, and S.~Mallat}, {\em Bandelet image approximation and
+  compression}, SIAM Journal of Multiscale Modeling and Simulation, 4 (2005),
+  p.~2005.
+
+\bibitem{masnou-level-lines}
+{\sc S.~Masnou}, {\em Disocclusion: a variational approach using level lines},
+  IEEE Trans. Image Processing, 11 (2002), pp.~68--76.
+
+\bibitem{meyer-oscillating}
+{\sc Y.~Meyer}, {\em Oscillating Patterns in Image Processing and Nonlinear
+  Evolution Equations}, American Mathematical Society, Boston, MA, USA, 2001.
+
+\bibitem{nesterov-smooth}
+{\sc Y.~Nesterov}, {\em Smooth minimization of non-smooth functions}, Math.
+  Program., 103 (2005), pp.~127--152.
+
+\bibitem{osv}
+{\sc S.~Osher, A.~Sol{\'e}, and L.~Vese}, {\em Image decomposition and
+  restoration using total variation minimization and the {$H^{-1}$ norm}},
+  Multiscale Modeling \& Simulation, 1 (2003), pp.~349--370.
+
+\bibitem{Perez04b}
+{\sc P.~P\'erez, M.~Gangnet, and A.~Blake}, {\em Patchworks: {E}xample-based
+  region tiling for image editing}, tech. report, Microsoft Research,
+  MSR-TR-2004-04, 2004.
+
+\bibitem{peyre-grouplets}
+{\sc G.~Peyr{\'e}}, {\em {T}exture {S}ynthesis with {G}rouplets}, {IEEE}
+  {T}ransactions on {P}attern {A}nalysis and {M}achine {I}ntelligence,  (2009),
+  p.~to appear.
+
+\bibitem{peyre-bandlets}
+{\sc G.~Peyr\'e and S.~Mallat}, {\em {A} {R}eview of {B}andlet {M}ethods for
+  {G}eometrical {I}mage {R}epresentation}, {N}umerical {A}lgorithms, 44 (2007),
+  pp.~205--234.
+
+\bibitem{portilla-denoise}
+{\sc J.~Portilla, V.~Strela, M.J. Wainwright, and Simoncelli E.P.}, {\em Image
+  denoising using scale mixtures of {Gaussians} in the wavelet domain}, IEEE
+  Trans Image Processing, 12 (2003), pp.~1338--1351.
+
+\bibitem{rudin-tv}
+{\sc L.~I. Rudin, S.~Osher, and E.~Fatemi}, {\em Nonlinear total variation
+  based noise removal algorithms}, Phys. D, 60 (1992), pp.~259--268.
+
+\bibitem{euler-elastica-inpainting}
+{\sc J.~Shen, S.~Ha~Kang, and T.~Chan}, {\em Euler's elastica and
+  curvature-based inpainting}, SIAM Journal of Applied Mathematics, 63 (2003),
+  pp.~564--592.
+
+\bibitem{starck-mca}
+{\sc J.-L. Starck, M.~Elad, and D.L. Donoho}, {\em Redundant multiscale
+  transforms and their application for morphological component analysis},
+  Advances in Imaging and Electron Physics, 132 (2004).
+
+\bibitem{sun-yuan05}
+{\sc J.~Sun, L.~Yuan, J.~Jia, and H.-Y. Shum}, {\em Image completion with
+  structure propagation}, in SIGGRAPH '05, 2005, pp.~861--868.
+
+\bibitem{Tropp-simultaneous}
+{\sc J.~A. Tropp}, {\em Algorithms for simultaneous sparse approximation. part
+  {II}: Convex relaxation}, Signal Processing, special issue "Sparse
+  approximations in signal and image processing", 86 (2006), pp.~589--602.
+
+\bibitem{tseng-proximal}
+{\sc P.~Tseng}, {\em Convergence of a block coordinate descent method for
+  nondifferentiable minimization}, Journal of Optimization Theory and
+  Applications, 109 (2001), pp.~475--494.
+
+\bibitem{vese-text}
+{\sc L.~Vese and S.~Osher}, {\em Modeling textures with total variation
+  minimization and oscillating patterns in image processing}, J. Sci. Comput.,
+  19 (2003), pp.~553--572.
+
+\bibitem{wei-texture-synthesis}
+{\sc L-Y. Wei and M.~Levoy}, {\em Fast texture synthesis using tree-structured
+  vector quantization}, in SIGGRAPH '00, 2000, pp.~479--488.
+
+\end{thebibliography}

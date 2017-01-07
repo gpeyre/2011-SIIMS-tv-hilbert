@@ -1,0 +1,1476 @@
+\documentclass[final]{siamltex}
+
+\usepackage{gpeyre}          
+%\usepackage[pdftex]{hyperref}
+
+
+% for the display of algorihtms
+\usepackage{graphicx} % allows for inclusion of EPS files
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{array} 
+
+\newcolumntype{M}[1]{>{\centering}m{#1}} 
+
+\floatstyle{boxed}
+\floatstyle{ruled}
+\newfloat{listing}{H}{loi}
+\floatname{listing}{Table}
+\graphicspath{{./images/}}
+
+
+
+\title{Locally Parallel Texture Modeling\thanks{This work has been done with the support of the French ``Agence Nationale de la Recherche'' (ANR), under grant NatImages (ANR-08-EMER-009), ``Adaptivity for natural images and texture representations'', while the two first authors of the paper were with CMLA, ENS Cachan, CNRS, UniverSud, 61 avenue du Pr\'esident Wilson, 94235 Cachan Cedex, France.}}
+
+
+\author{Pierre Maurel\footnotemark[1]
+\and Jean-Fran\c{c}ois Aujol\footnotemark[2]
+\and Gabriel Peyr\'e\footnotemark[3]}
+
+\begin{document}
+
+\maketitle
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+%\footnotetext[2]{CMLA, ENS Cachan, CNRS, UniverSud, 61 avenue du Pr\'esident Wilson, 94235 Cachan Cedex, France ({\tt \{maurel,aujol\}@cmla.ens-cachan.fr}).}
+\footnotetext[1]{VisAGeS, Universit\'e de Rennes 1, IRISA, UMR CNRS-6074 Campus de Beaulieu, F-35042 Rennes, France ({\tt pierre.maurel@irisa.fr})}
+\footnotetext[2]{LATP, CMI, Universit\'e de Provence, 39 rue F. Joliot-Curie, 13453 Marseille cedex 13, France ({\tt aujol@cmi.univ-mrs.fr}).}
+\footnotetext[3]{Ceremade, Universit\'e Paris-Dauphine, Place du Mar\'echal De Lattre De Tassigny, 75775 Paris Cedex 16, France ({\tt gabriel.peyre@ceremade.dauphine.fr}).}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\begin{abstract}
+   This article presents a new adaptive framework for locally parallel texture modeling. Oscillating patterns are modeled with functionals that constrain the local Fourier decomposition of the texture. We first introduce a texture functional which is a weighted Hilbert norm. The weights on the local Fourier atoms are optimized to match the local orientation and frequency of the texture. This adaptive model is used to solve image processing inverse problems, such as image decomposition and inpainting. The local orientation and frequency of the texture component are adaptively estimated during the minimization process.
+To improve inpainting performances over large missing regions, we introduce a higly non-convex generalization of our texture model. This new model constrains the amplitude of the texture and it allows one to impose an arbitrary oscillation profile. 
+Numerical results illustrate the effectiveness of the method. 
+%This non-convex model bridges the gap between regularization methods for image restoration and patch-based synthesis approaches that are successful in texture synthesis. Numerical results show that our method improves state of the art algorithms for locally parallel textures.
+\end{abstract}
+
+\begin{keywords} 
+Locally parallel textures, image decomposition, inpainting, total variation, curvelets, cartoon image.
+\end{keywords}
+
+\begin{AMS}  
+68U10, 65K10, 65F22 
+\end{AMS}
+
+\pagestyle{myheadings}
+\thispagestyle{plain}
+\markboth{P. MAUREL, J.-F. AUJOL AND G. PEYR\'E}{LOCALLY PARALLEL TEXTURE MODELING}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+Texture modeling is fundamental for a large number of image processing problems, such as image segmentation, object recognition and image restoration. Image restoration methods take advantage of a texture model which imposes constraints on the geometry of textures present in the image. This paper proposes a framework for modeling locally parallel oscillating patterns based on local Fourier decompositions. Figure \ref{fig:samples} shows examples of typical locally parallel textures.
+
+Our framework parametrizes the geometry of the texture using a frequency field $\xi(x)$ which gives the orientation and frequency of the texture around a point $x$. Two different models based on this frequency field are introduced. A first one is used for image separation and for inpainting small holes. To improve the performance of inpainting large missing regions, we extend our framework using a highly non-convex texture model.
+
+\begin{figure}[!ht]
+ \begin{center}
+    \includegraphics[width=.24\linewidth]{samples/dunes}
+    \includegraphics[width=.24\linewidth]{samples/fingerprint}
+    \includegraphics[width=.24\linewidth]{samples/turbulence}
+    \includegraphics[width=.24\linewidth]{samples/zebra}
+ \end{center}
+ \caption{Examples of locally parallel natural textures. }
+ \label{fig:samples}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Previous Works}
+
+Decomposing an image into meaningful components is an important and challenging inverse problem in image processing. 
+A variational decomposition algorithm seeks a decomposition of an
+image $f$ into various  components representing different information in the
+image. In this paper we focus on the cartoon-texture decomposition
+problem and we seek for a decomposition of $f = u+v$ where
+$u$ should capture the sketch of the image and $v$ the texture
+content. The definition of texture is vague and depends on
+the local image scale. As a matter of fact, a structure at one scale can be
+regarded as a texture at another scale. This article is focused on locally parallel textures, that correspond to oscillating patterns with a local geometric orientation.
+
+Inverse problem regularization is an active area of research in image processing. It aims at restoring a high resolution image $f_0$ from possibly incomplete observations $f=\Phi f_0 + w$ where $\Phi$ is a non-invertible operator and $w$ is an additive noise. Some of these problems, such as image denoising, image deconvolution or image inpainting, can be solved efficiently by seeking the solution as the sum of two components, $f_0 \approx u+v$, where $u$ and $v$ capture two different meaningful components, e.g. the structure and the texture. 
+
+The decomposition and regularization are done simultaneously by solving the following minimization problem
+\begin{equation}
+\label{eq:general-inverse-problems}
+	(u,v) = \uargmin{\tu,\ \tv} \frac{1}{2} \normLdeux{f-\Phi(\tu+\tv)}^2 + \lambda\:J(\tu) + \mu\:T(\tv)
+\end{equation}
+where the functionals $J$ and $T$ model respectively the cartoon and the texture contents, $\lambda$ and $\mu$ are two positive real parameters balancing the importance of each term, and $\normLdeux{f-\Phi(\tu+\tv)}$ is a fidelity term which takes into account the presence of noise in the image. The solution of the inverse problem is then given by $u+v$.
+
+When $\Phi=\Id$ is the identity operator, the solution of \eqref{eq:general-inverse-problems} provides a decomposition of $f$ between two components $u$ and $v$ such that $J(u)$ and $T(v)$ are small. If the functionals $J$ and $T$ do not capture the noise, then $u+v$ is a denoised version of $f$.
+When $\Phi$ is a blurring operator, then problem \eqref{eq:general-inverse-problems} is a deconvolution problem. Image decomposition into a cartoon part and a texture part has already been proposed in~\cite{osv, Daub_Teschke, Daub_Tescke_Vese, Kim_Vese} for image deconvolution.
+ 
+\medskip 
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\paragraph{Cartoon Model}
+In the early 90's and for denoising purpose, Rudin, Osher and Fatemi~\cite{rudin-tv} proposed to use the total variation of an image to model its cartoon part. The TV norm, $J(u) = \normTV{u}$, is $\int |\nabla u|$ for a continuously differentiable function $u$ and is extended to discontinuous functions. It allows one to recover piecewise smooth functions without smoothing sharp discontinuities. This is related to the wavelet thresholding algorithm of Donoho and Johnstone~\cite{donoho-shrinkage} where the wavelet decomposition of a cartoon image is assumed to be sparse. The cartoon functional $J(u)$ is therefore the $\lun$ norm of the coefficients of this decomposition. To exploit the geometric image regularity along edge curves, Cand\`es and Donoho proposed to decompose an image over curvelet atoms having both an elongated support and vanishing moments~\cite{candes-tight-frame,candes-discrete-curvelet}. It brings a mathematical and algorithmic solution to the problem of approximating geometric $\mathcal{C}^2$ images whose contours are $\mathcal{C}^2$. The bandlet transform,~\cite{Le05bandeletimage,peyre-bandlets}, uses an adaptive scheme to approximate an image. A dictionary of bandlet bases is parametrized by the local orientation of edges and an algorithm finds a best basis adapted to the function to approximate.
+
+\medskip 
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\paragraph{Texture Model}
+Following~\cite{rudin-tv}, Yves Meyer~\cite{meyer-oscillating} pushed forward the idea of using more sophisticated norms to capture oscillating patterns. In particular he proposed a weak norm dual of the TV norm, $T(v)=\norm{v}_G$ where the Banach space $G$ contains signals with large oscillations, and thus in particular textures and noise. This model has been successfully implemented in~\cite{aujol-decomposition,vese-text}. Meyer's idea inspired several works. In~\cite{osv} Osher, Sol\'e, and Vese use the $H^{-1}$ norm to extract high frequency patterns. In~\cite{aujol-constrained}, Aujol and Gilboa propose a general framework based on a Hilbert norm defined by some symmetric positive kernel $K$, $T(v) = \dotp{K v}{v}_{\Ldeux}$. They showed an example where the Hilbert norm promotes a single frequency in the extraction of the texture. Similarly to the cartoon case, several approaches are based on the sparsity of the texture in a well chosen dictionary. The morphological component analysis of Starck et al.~\cite{starck-mca} uses a local cosine dictionary to model oscillating patterns. Peyr\'e improves this fixed sparse regularization by using an adaptive grouplet frame for geometric textures~\cite{peyre-grouplets} that makes use of a local orientation field. 
+
+%\paragraph{Texture Models}
+%
+%Classical models of texture use either Fourier or wavelet domain characterization and generates cloudy texture without geometric structures. However, a large class of textures presents geometric structures, such as oriented patterns. Texture models based on an explicit directional field similar to $\nabla \phi$ have been used in image synthesis~\cite{almeida-anisotropic}. Similar ideas with emphasis on local anisotropy are useful in computer graphics to render turbulent textures~\cite{wijk-image-based}. %The idea of an underlying vector field that drives the anisotropy has also been proposed in desocclusion~\cite{masnou-level-lines} when large holes need to be filled.
+%
+%Oriented multiscale decompositions such as Gabor wavelets~\cite{lee-gabor} are traditionally used to represent directional textures. 
+%The problem of approximating locally parallel textures is studied in the work of Demanet and Ying~\cite{demanet-waveatoms} where a wave atom orthogonal basis is presented.% Approximation with $M$-waveatoms exhibits an asymptotic error decay of $M^{-1}$ which is optimal for such fixed basis.
+% In this article we study these locally parallel textures using a local fourier transform (Gabor expansion~\cite{mallat-book}, not to be confounded with Gabor wavelets). Although the Fourier atoms do not represent optimally locally parallel textures, it allows a fine resolution of the local frequency, which is important to perform our adaptive Hilbert norm construction. 
+%
+
+\medskip 
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\paragraph{Inpainting}
+
+%   For the inpainting problem, energies involving the curvature have also been studied~\cite{euler-elastica-inpainting,curvature-driven-diffusion}. Another class of method characterizes a cartoon image from its decomposition on a basis, such as wavelets or curvelets~\cite{starck-mca,mca-inpainting,fadili-inpainting2}.
+
+Inpainting aims at restoring an image $f_0$ from which a set $\Omega \subset \{0,\ldots,n-1\}^2$ of pixels is missing. It corresponds to the inversion of the ill-posed problem $f = \Phi f_0+w$ where $\Phi$ is defined as 
+\eql{\label{eq:inpainting-pbm}
+		(\Phi f_0)(x) = 
+		\choice{
+			0 \qifq x \in \Omega,\\
+			f_0(x) \qifq x \notin \Omega
+		}
+}
+and $w$ is some additive noise. The solution of this inverse problem can be obtained as $u+v$ by solving \eqref{eq:general-inverse-problems} with the operator $\Phi$ defined above.
+
+The $J$ and $T$ functionals mentioned above for structure and texture separation can also be used to solve the inpainting problem. 
+These regularization approaches are successful for missing regions $\Omega$ of small size, because inpainting corresponds to an interpolation problem. Let us for example cite the total variation inpainting of Chan and Shen~\cite{chan-shen-tv-inpainting} inspired
+from~\cite{masnou-level-lines}, or the morphological component analysis~\cite{mca-inpainting,fadili-inpainting2} which relies on sparse regularization in several transform domains such as wavelet for structure and local cosine for texture. When the size of the missing parts is larger than the characteristic length of the structure or texture, more constrained models are required. Several variational methods have been developed ~\cite{masnou-level-lines,bertalmio-inpainting,euler-elastica-inpainting}, often adding a curvature term to the total variation to guide the diffusion along the level lines. These higher-order methods improve the inpainting results but are also more unstable and slower.
+
+For images where large areas are missing, inpainting corresponds to a problem of image synthesis with prescribed boundary conditions, and non-convex methods are required. Indeed, convex regularization approaches suffer from contrast attenuation in the center of large missing areas. Exemplar-based methods~\cite{efros-nonparam-sampling,wei-texture-synthesis} enables such a constrained synthesis of missing data. They perform the inpainting by using a consistent recopy of patches.
+These methods reconstruct well non-geometric textures. However in images where edges and directional textures are present, a geometry-oriented process seems necessary. Different approaches have been proposed in combination with an exemplar-based inpainting, by using an optimized ordering of pixels to copy 
+\cite{criminisi-inpainting,Perez04b,drori-siggraph,cao2009geometrically}, 
+a manual intervention by the user~\cite{sun-yuan05}, or combining texture and geometric interpolation~\cite{Bertalmio03simultaneousstructure}.  Exemplar-based methods can be casted as non-convex variational minimizations, see for instance~\cite{aujol-variational-exemplar-based,arias2009variational, komodakis2006image,kwatra-siggraph}. This non-convexity is crucial to cope with the attenuation effect that plagues convex regularization approaches.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Contributions}
+
+The main contribution of this work is a new adaptive framework for modeling locally parallel oscillating patterns. 
+A first adaptive texture norm which promotes locally parallel oscillating patterns is constructed in Section~\ref{sect:texture-model}. This texture model is based on a local Fourier decomposition and an adaptive frequency and orientation field $\xi$ which is estimated during the minimization, $T(v)=T_\xi(v)$. $T_{\xi}(v)$ is a convex functional (with respect to $v$) which is small for a texture $v$ if its main frequency around a point $x$ is close to $\xi(x)$. Our model has therefore two important properties: it is spatially variant since different frequencies are locally extracted and it is adaptive since the frequency field is optimized to fit the features of the texture to extract. 
+
+This field $\xi : \{1,\ldots,n\}^2 \rightarrow \RR^2$ associates to a point $x$ in the image $v \in \RR^{n \times n}$ the instantaneous frequency of the oscillating texture around $x$.  $\norm{\xi(x)}$ gives the local frequency  and $\xi(x)/\norm{\xi(x)}$ the local orientation of the texture around $x$. Figure~\ref{fig:illust-xi} shows an example of the field $\xi$ for several points of a locally parallel texture.
+\begin{figure}[!ht]
+ \begin{center}
+    \includegraphics[width=.3\linewidth]{illust_xi/illust_xi_image_texture}
+    \hspace{.1\linewidth}
+    \includegraphics[width=.3\linewidth]{illust_xi/illust_xi}
+ \end{center}
+ \caption{On the right, a graphic representation of the instantaneous frequency field $\xi$ for the texture on the left. The length of the lines is proportional to the local frequency of the oscillating patterns and the orientation of the lines gives their local orientation. }
+ \label{fig:illust-xi}
+\end{figure}
+
+Section~\ref{sect:nrj-minim} shows how our adaptive texture model can be used to regularize inverse problems such as image decomposition, denoising or inpainting. The minimization is done with respect to $u$ and $v$, respectively the structure and texture part, but also with respect to $\xi$, the frequency field, and this problem is written as
+\begin{equation}
+\label{eq:variational-decomposition-noise}
+	\boxed{(u,v,\xi) \in \uargmin{\tu,\ \tv,\ \txi \in \Cc} \frac{1}{2} \normLdeux{f-\Phi(\tu+\tv)}^2 + \lambda\:J(\tu) + \mu\:T_\txi(\tv)}
+\end{equation}
+where $\Cc$ is a set of constraints on the field $\xi$ and $\Phi$ is the linear operator to invert. For the decomposition and denoising problem $\Phi$ is the identity operator $\Id$. For the inpainting case, $\Phi$ is the masking operator given by \eqref{eq:inpainting-pbm}.
+This methods computes a separation of the image into a structure component $u$  and
+a texture component $v$;   the denoising or inpainting result is then obtained by adding these two components, i.e. by considering
+$u+v$. The energy to be minimized in \eqref{eq:variational-decomposition-noise} is non-convex, and Section \ref{sect:nrj-minim} details a block coordinate descent that converges (up to a sub-sequence) to local minimum.
+
+Section~\ref{sect:numerical} shows numerical examples for
+image decomposition, denoising and inpainting. Let us remark that some
+of the existing decomposition frameworks (such as TV-$G$
+\cite{meyer-oscillating} or TV-$H^{-1}$~\cite{osv}) are not suitable
+for denoising. As a matter of fact, the $G$ and the $H^{-1}$ norms are
+low for any high-frequency patterns, and they are also low for a large
+part of the noise. On the other hand, the TV norm penalizes strongly
+oscillating patterns and therefore these models are not able to
+separate efficiently the texture from the noise. On the contrary our
+norm is low for patterns which present a certain frequency and
+orientation, but it is high for noise without any significant oriented patterns. Our texture model is therefore more appropriate for denoising locally parallel textures.
+
+To tackle the inpainting of large missing regions, Section \ref{sect:non-convex} introduces a highly non convex texture functional $T_{A,\xi}(v)$. It extends our texture modeling framework by integrating an amplitude field $A(x)$ that imposes the contrast of the texture patterns around a point $x$ inside the area to inpaint. This non-convex model makes also use of a 
+``rendering function" $h$ which is a change of contrast that maps the inpainted texture $v$ to a more general oscillating profile $h(v)$. This enables the inpainting of arbitrary locally parallel textures over large missing areas. An algorithm finds a local minimum of this non-convex energy and numerical examples show the efficiency of this approach.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Cartoon Model}
+\label{sect:cartoon-model}
+This section presents the cartoon model $J(u)$ that we use to constrain the cartoon layer $u$ in our regularization framework.
+Following the idea of~\cite{bect-chambolle-iterative} and~\cite{starck-mca}, it mixes the total variation norm and the $\lun$-norm of the curvelet decomposition of $u$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Total Variation Norm}
+In the following, $u \in \RR^N$ is a discrete image of $N = n \times n$ pixels. 
+A discretized gradient for such an image $u$ is defined as
+\eql{
+	\label{eq-disc-grad}
+	\nabla u[i,j] = (\partial_x u[i,j],\partial_y u[i,j]), 
+}
+where
+\begin{align}
+	\partial_x u[i,j]& = 
+	\choice{
+		u[i+1,j]-u[i,j] \qifq 0 \leq i < n-1,\\
+		0 \text{ otherwise,}
+	}\\
+	\partial_y u[i,j]& = 
+	\choice{
+		u[i,j+1]-u[i,j] \qifq 0 \leq j < n-1,\\
+		0 \text{ otherwise}.
+	}
+\end{align}
+The gradient is thus a vector field $\nabla u \in \RR^{N \times 2}$.
+
+The discrete total variation of an image $u$ is the $\lun$-norm of the gradient
+\begin{equation}
+J_{TV}(u) = \normu{\nabla u}
+\end{equation} 
+where the $\lun$ norm of a vector field $z=(z^1,z^2) \in \RR^{N \times 2}$ is
+\begin{equation}
+	\normu{z} = \sum_{1 \leq i \leq N} \sqrt{(z^1_i)^2 + (z^2_i)^2}.
+\end{equation}
+
+\medskip
+
+\paragraph{Curvelets} The curvelet transform~\cite{candes-tight-frame,candes-discrete-curvelet} is a decomposition on multiscale oriented atoms $c_m=c_{j,l,k}$ designed to represent images at different scales and angles. The curvelets atoms form a redundant tight frame of $\RR^N$. A curvelet atom $c_{j,l,k} \in \RR^N$ is parametrized by a scale $j$, an orientation $l$ and a position $k$. $c_{j,l,k}(x)$ is of rapid decay away from a $2^{-j}$ by $2^{-j/2}$ rectangle (width = length$^2$), with major axis pointing in the direction $\theta_l = 2\pi \cdot 2^{-\left\lfloor j/2\right\rfloor} \cdot l$ and centered on a point $x_k$ depending on $k$, $l$ and $j$.
+
+Cartoon images that are $\mathcal{C}^2$ outside a set of $\mathcal{C}^2$ edge curves have a sparse decomposition in the curvelet frame~\cite{candes-tight-frame}. The $\lun$-norm of the curvelet coefficient 
+\begin{equation}
+	J_{Curv}(u) = \sum_{j,k,l} |\dotp{u}{c_{j,l,k}}|
+\end{equation}
+is thus an appealing functional to characterize such cartoon images, as advocated by Starck et al.~\cite{starck-mca}.
+
+We use the CurveLab 2.1.2 toolbox, which implements the discrete curvelet transforms described in~\cite{candes-discrete-curvelet}. It corresponds to a non-normalized Parseval tight frame. The $\ldeux$-norm of the atoms is then approximately 
+% $1/\sqrt{\textrm{redundancy of the frame}} = 
+$1/\sqrt{P/N}$ where $P$ is the number of curvelet atoms.
+
+\medskip
+
+% Weight for TV / Curvelet balance
+\newcommand{\tvcurvweight}{\rho}
+
+\paragraph{TV-Curvelets}
+$J_{TV}$ is well suited for piecewise constant images whereas $J_{Curv}$ captures efficiently piecewise smooth images with $\mathcal{C}^2$-smooth contours. However, contrary to $J_{TV}$, $J_{Curv}$ also captures oscillating patterns of locally parallel textures. This is an issue to perform an efficient texture/structure decomposition. Following the idea of~\cite{bect-chambolle-iterative} and~\cite{starck-mca}, we thus use a linear combination of these two energies in our cartoon model
+\begin{equation}
+	\label{def:Ju-cartoon}
+	J(u)\ =\ \tvcurvweight\:J_{TV}(u)\ +\ (1-\tvcurvweight)\:J_{Curv}(u)
+\end{equation}
+where $\tvcurvweight \in [0,1]$ balances the importance of the two functionals and allows one to find the best compromise between the effects of each energy. For the decomposition or denoising case, $\tvcurvweight$ is chosen to be equal to $1$, $J(u) = J_{TV}(u)$. For the inpainting case $\tvcurvweight$ is chosen  function of the size of the holes. If the size of the missing parts is large, the total variation inpainting fails indeed to reconstruct the geometric structure and the curvelet transform helps to improve the result of inpainting.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Texture Modeling Using an Adaptive Hilbert Norm}
+\label{sect:texture-model}
+
+This section introduces a new texture model based on an adaptive vector field $\xi$ which represents the instantaneous frequencies of the texture. Figure~\ref{fig:illust-xi} shows a graphical representation of this field. This first model is a functional $T_{\xi}(v)$ (convex with respect to $v$), depending on $\xi$, which is small for a texture $v$ if its main frequency around a point $x$ is close to $\xi(x)$.
+
+In~\cite{aujol-constrained}, Aujol and Gilboa use a linear Hilbert norm defined by a symmetric positive kernel $K$, 
+\eq{
+	T(v) = \dotp{K v}{v}_{\Ldeux}. 
+}
+This norm can be computed using a frame $\{ \psi_\ell \}_\ell$ that is a possibly redundant family of $P \geq N$ atoms $\psi_\ell \in \RR^N$. The decomposition of an image in this frame reads
+\begin{equation}
+	\label{def:decomp-operator}
+	\Psi v = \{ \dotp{v}{\psi_\ell} \}_{\ell=0}^{P-1}  \in \RR^P
+\end{equation}
+where $\Psi : \RR^N \rightarrow \RR^P$ is the frame operator.
+
+Given a set of positive weights $\gamma_\ell \geq 0$, a norm is then  defined as
+\begin{equation}
+	\label{eq:texture-norm-generic}
+	T(v) = \sum_\ell \gamma_\ell^2 |\dotp{v}{\psi_\ell}|^2 = \normLdeux{ \Gamma \Psi v }^2
+\end{equation}
+where $\Gamma = \diag_\ell(\gamma_\ell)$. 
+This corresponds to a Hilbert space associated to the kernel $K = \Psi^* \Gamma^2 \Psi$. 
+
+Defining a norm in this framework requires to define a transform $\Psi$ well-suited to capture oscillating textures, and to compute a set of weights $\Gamma$ adapted to the texture content $v$ to extract from $f$. 
+Aujol and Gilboa~\cite{aujol-tv-hilbert} proposed to use the Fourier basis so that $\Psi$ corresponds to the discrete Fourier transform. This defines a translation-invariant kernel $K$. This paper proposes to replace the global Fourier basis by a redundant local Fourier basis, to capture the spatially and frequentially varying structures of locally parallel textures and to use the frequency field $\xi$ in the definition of the weights $\Gamma(\xi)$ to promote locally the main frequency of the texture,
+\begin{equation}
+	T_\xi(v) = \normLdeux{ \Gamma(\xi) \Psi v }^2
+\end{equation}
+where $\Psi$ is the decomposition on the local Fourier frame presented in Section~\ref{subsec:local-fourier-frame} and $\Gamma(\xi)$ are the weights depending on $\xi$ defined in Section~\ref{subsec:weight-design}.
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Local Fourier Frame}
+\label{subsec:local-fourier-frame} 
+A discrete short time Fourier atom, located around a position $x_p = p \Delta_x$ and with local frequency $\xi_{k} = k \Delta_\xi = k/q$ is defined as
+\begin{equation}
+	\psi_{p,k}[y] = q^{-1} g[y - p \Delta_x] e^{ \frac{2i\pi}{q}( y_1 k_1 + y_2 k_2 ) }
+\end{equation}
+for $k \in \{-q/2,\ldots,q/2-1\}^2$ and $p \in \{0,\ldots,n/\Delta_x\}^2$, where $g$ is a smooth window, centered around $0$, and the size of its support is $q \times q$ pixels with $q > \Delta_x$. 
+
+The local Fourier frame $\{ \psi_{p,k} \}_{p,k}$ is a redundant family of $P = (q/\Delta_x)^2 N$ vectors of $\RR^N$. The decomposition operator $\Psi$ defined by \eqref{def:decomp-operator} which decomposes an image $v$ in this frame,  $\Psi v = \{ \dotp{v}{\psi_{p,k}} \}_{p,k} \in \RR^P$ , is computed with the 2D Fast Fourier Transform of the $q \times q$ images $v[y] g[\Delta_x p - y]$. The computation of $\Psi v$ thus requires $O(N q^2 \log_2(q^2)  / \Delta_x^2)$ operations.
+
+The dual operator $\Psi^*$ reconstructs an image $\Psi^* c \in \RR^N$ from a set of coefficients $c[p,k] \in \RR^{q^2 \times N}$
+\begin{equation}
+\label{def:dual_operator}
+	\Psi^* c = \sum_{p,k} c[p,k] \psi_{p,k}.
+\end{equation}
+This dual operator is implemented using $N/\Delta_x^2$ inverse Fast Fourier Transforms.
+
+The operator $\Psi^* \Psi$ is diagonal
+\eql{
+	\Psi^* \Psi = \diag_x( \sum_y g[\Delta_x y - x]^2 ).
+}
+%and the norm of the operator $\Psi^* \Psi$ is $\max_x \sum_y g^o[\Delta_x y - x]^2$.
+The window $g$ is normalized to satisfy
+\eql{\label{eq:tf-gabor}
+	\foralls x, \quad \sum_y g[\Delta_x y - x]^2 = 1.
+}
+This implies that $\Psi^* \Psi = \Id_N$ so that $\Psi^*=\Psi^+$ is the pseudo inverse of the decomposition operator $\Psi$. The corresponding Gabor family $\{\psi_{p,k}\}_{k,p}$ is then a tight frame of $\RR^N$ and one has both the analysis-synthesis formula and the conservation of the energy
+\eql{
+	v = \sum_{p,k} \dotp{v}{\psi_{p,k}} \psi_{p,k}
+	\quad\textrm{and}\quad 
+	\norm{v}^2 = \sum_{p,k} |\dotp{v}{\psi_{p,k}}|^2,
+}
+which generalize the concept of orthogonal basis to a redundant family of $P > N$ vectors. 
+Let us finally remark that $\Psi^* \Psi = \Id_N$ but $\Psi \Psi^* \neq \Id_N$, since the Gabor frame is a redundant family.
+
+For the numerical results, we use a tensor product window $g[x] = g^o[x_1] g^o[x_2]$ where $g^o$ is a normalized Hanning window
+\begin{equation}
+   g^o[x_1]   = \frac{\tilde{g}^o[x_1]}{\sqrt{\sum_y \tilde{g}^o[\Delta_x y - x_1]^2}}
+   \qwhereq
+   \tilde{g}^o[x_1] = \sin(\pi x_1/q)^2.
+\end{equation} 
+
+The size $q$ of the local Fourier windows should be set according to the smoothness of the geometry of the texture and to its frequency content. A locally parallel texture with irregular directions requires small windows, but this might be an issue to detect low frequency patterns. In practice, an estimation $\xi_{min}$ of the lowest frequency present in the texture is given by the user, and we set $q = 3/\xi_{min}$. 
+
+The overlapping $\Delta_x$ of the windows should satisfy $\Delta_x < q$ and selecting a small value helps to reduce visually unpleasant artifacts. In practice we set $\Delta_x=q/4$.
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Adaptive Weight Design}
+\label{subsec:weight-design}
+
+The Hilbert norm $T_\xi(\cdot)$ adapted to oscillating textures is a weighted norm over the local Fourier coefficients. It is parametrized by a vector field $\xi$ 
+\begin{equation}
+	\xi : \{1,\ldots,n/\Delta_x\}^2 \mapsto \RR^2
+\end{equation}
+which represents the local frequency of the texture component $v$. For $p \in \{1,\ldots,n/\Delta_x\}^2$, the local frequency around the point $x_p = p \Delta_x$ is given by $\abs{\xi(p)}$ and the local orientation of the texture is given by $\xi(p)/\abs{\xi(p)}$.
+
+The general formulation \eqref{eq:texture-norm-generic} is instantiated using a local Fourier frame $\psi_\ell = \psi_{p,k}$ for $\ell=(p,k)$ as
+\begin{equation}
+	\label{eq:normT-def}
+	T_\xi(v) = \sum_{p,k} \gamma_{p,k}(\xi)^2 |\dotp{v}{\psi_{p,k}}|^2 = \normLdeux{ \Gamma(\xi) \Psi v }^2
+\end{equation}
+where
+\begin{equation}
+	\label{def:Gamma}
+	\Gamma(\xi) = \diag_{\ell=(p,k)}(\gamma_{p,k}(\xi)).
+\end{equation}
+Each $\gamma_{p,k}(\xi) \geq 0$ weights the influence of each local Fourier atom in the texture model.
+
+% Intuitively, $\gamma_{p,k}(\xi)$ should be small when the texture $v$ contains a local oscillation of frequency close to $\xi_k$ around the point $x_p$. We consider a locally oscillating texture model, where typical texture patterns are locally well approximated by a single atom. 
+
+The norm $T_\xi(\cdot)$ should be small for an oscillating pattern around the point $x_p$ if its main frequency is close to $\xi(p)$. As a consequence the weight $\gamma_{p,k}(\xi)$ should be small if $\xi_k$ is close to $\xi(p)$ or to $-\xi(p)$. Furthermore, a special case is considered when there is locally no significant parallel texture in a certain area of the image. By convention, $\xi(p)$ is set to $(0,0)$ if there is no significant oriented patterns around $x_p$ in the image.
+
+The weights are therefore defined as 
+\begin{equation} 
+	\label{eq:weights-def}
+ 	\gamma_{p,k}(\xi) = \left\{
+         \begin{array}{c}
+           1 \quad \mathrm{if}\ \xi(p) = (0,0) \\
+           \gamma_0 + 
+           \Big(1 - G_\sigma \big(\norm{\xi_k + \xi(p)}\big)\Big)
+           \Big(1- G_\sigma \big(\norm{\xi_k - \xi(p)}\big)\Big)
+           \quad \mathrm{otherwise}\\
+         \end{array}
+       \right.
+\end{equation}
+where $G_\sigma(x) = \exp(-(x/\sigma)^2/2))$, and $\gamma_0>0$ is a small constant that prevents the weights from vanishing, and is required to prove the convergence of our numerical scheme, see Theorem \ref{thm-convergence}.
+
+The scale parameter $\sigma$ reflects the deviation we are expecting to find in the frequency spectrum of the texture compared to $\xi(p)$. In our numerical experiments we took $\sigma = 1/q$. When there is not a significant oriented texture around $x_p$, we choose $\gamma_{p,k} = 1$ for all $k$, in order not to promote an arbitrary orientation in the extraction. The decision between the presence or the absence of the oriented texture is made during the computation of $\xi$ and will become clear in the next section, see \eqref{eq:def_condition_xi}.
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Sparsity versus Unimodality for Texture Modeling}
+
+Our texture model \eqref{eq:normT-def} assumes an unimodality of the local Fourier expansion of the texture. This can be understood as a strong sparsity prior, since the local expansion of the texture is constrained to be highly localized near a single frequency. Our texture prior is thus less general than the MCA framework~\cite{starck-mca} that makes use of a less constrained $\lun$ sparsity. 
+
+Imposing unimodality however helps to better recover strongly geometric textures, such as the natural textures displayed in Figure \ref{fig:samples}. For applications that require processing or extraction of this kind of patterns, our method is able to improve the results of more general sparsity priors. 
+
+Furthermore, our method introduces an explicit geometric flow parameter $\xi(x)$, that might be of interest for certain applications beyond texture restoration. Although this is out of the scope of this paper, this flow $\xi(x)$ might also be regularized by imposing additional constraints on its regularity.
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Color Texture Processing}
+
+The adaptive texture energy $T_\xi(v)$ extends to the color setting, where $v = (v_1,v_2,v_3)$
+and each $v_i(x) \in \RR$ is a color component. Natural textures tend to have a single geometry across all the three color components, and we thus consider a single geometrical flow $\xi$. The energy~\eqref{eq:normT-def} is extended as
+\eq{
+	T_\xi(v) = \sum_{p,k} \gamma_{p,k}(\xi)^2 \sum_{i=1}^3 |\dotp{v_i}{\psi_{p,k}}|^2.
+}
+Using a single geometry for all the components produces a coherent texture separation and inpainting. 
+
+For the TV part of the regularization term ($J_{TV}$), we can use any classical scheme for color TV minimization. It can be done with a regularized version of TV and the use of the CB or HSB spaces as in \cite{Kang00, AujolKang}. Another possibility is to use the definition of $BV(\mathbb{R}^3)$ and then resort to a projection scheme as in \cite{Bresson, DuvalAujolVese}  (the mixing of the three channels is then done through the vectorial norm). For the curvelet part ($J_{curv}$) of the regularization term, the same idea can be used with a multichannel $\lun$-norm as in \cite{Tropp-simultaneous}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Adaptive Texture Regularization Algorithm}
+\label{sect:nrj-minim}
+
+Taking advantage of the adaptivity of the texture model introduced in Section~\ref{sect:texture-model}, an adaptive texture regularization algorithm is presented. It splits an image $f$ into three components, $f = u+v+w$, where $u$ captures the sketch of the image, $v$ the texture content and $w$ the noise. The minimization is done with respect to $u$ and $v$, the structure and texture parts, but also with respect to $\xi$, the frequency field. This algorithm finds a stationary point of  problem \eqref{eq:variational-decomposition-noise}
+\begin{equation}
+	(u,v,\xi) = \uargmin{\tu,\ \tv,\ \txi \in \Cc} \Ee(\tu,\tv,\txi) = \uargmin{\tu,\ \tv,\ \txi \in \Cc}
+	 \frac{1}{2} \normLdeux{f-\Phi(\tu+\tv)}^2 + \lambda\:J(\tu) + \mu\:T_\txi(\tv), \quad 
+\end{equation}
+where $J$ is the regularization term defined in \eqref{def:Ju-cartoon} and $T_\xi$ is our texture norm defined by \eqref{eq:normT-def}. The residual noise layer is computed as $w = f-u-v$.
+$\Phi$ is a linear operator so that an inverse problem can be solved during the decomposition process. For a denoising and separation purpose, $\Phi$ is simply the identity operator, i.e. $\Phi = \Id$, and for the inpainting inverse problem, where one wants to reconstruct some missing parts, $\Phi$ is the masking operator  given by \eqref{eq:inpainting-pbm}. 
+
+$\Cc$ is a set of constraints on the orientation field $\xi$. Since the texture component $v$ does not contain low frequency patterns, the frequency $|\xi|$ is forced to be large enough, i.e.  $\forall p, |\xi(p)|>\tau$, for some real positive parameter $\tau>0$.
+Furthermore, an oscillating pattern of frequency $\xi(p)$ is assumed to be present in the image $f$ around the point $x_p$ only if $|\dotp{f}{\psi_{p,k}}| > \eta_p$ where $k = \xi(p)/\Delta_{\xi}$ and $\eta_p>0$ is a real positive parameter. This reflects the fact that one does not want to arbitrary select a frequency for an area of the image where there is no oscillating pattern. In short, we have
+
+\begin{equation}
+	\label{eq:def_condition_xi}
+	\Cc = \left\{
+	     \xi : \{1,\ldots,n/\Delta_x\}^2 \mapsto \RR^2\ \hspace{-.1cm}\left|\hspace{-.1cm}
+	        \begin{array}{cc}
+				\forall p, & \tau  \leq |\xi(p)| \leq 1/2 \\
+				\forall p, & \big(\forall k, |\dotp{f}{\psi_{p,k}}| \leq \eta_p\big)\Rightarrow \xi(p) = (0,0)
+	 		\end{array}
+	 	     \right. 
+     \hspace{-.1cm}\right\}.
+\end{equation}
+In our numerical experiments we take $\tau = 2/q$, where $q$ is the size of the local Fourier windows, and $\eta_p = 2  \overline{|\Psi f_p|}$ where $\overline{|\Psi f_p|}$ is the average value of $|\dotp{f}{\psi_{p,k'}}|$ for $k' \in \{-q/2,\ldots,q/2-1\}^2$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Block coordinate descent optimization algorithm}
+
+The energy $\Ee$ defined in \eqref{eq:variational-decomposition-noise} is non-convex. 
+We propose a block coordinate descent algorithm to minimize $\Ee$ : we iteratively minimize  $\Ee$ with respect to each of its variables $\xi$, $u$, $v$. Starting from $u^{(0)} = v^{(0)} = \xi^{(0)} = 0$, the following iterates are defined :
+\begin{align}\label{eq-block-coord-descent}
+	u^{(\ell+1)} &\in \uargmin{u} \Ee(\tu,v^{(\ell)}, \xi^{(\ell)}),\\
+	v^{(\ell+1)} &= \uargmin{v} \Ee(u^{(\ell+1)},\tv, \xi^{(\ell)}),\\
+	\xi^{(\ell+1)} &= \uargmin{\txi \in \Cc} \Ee(u^{(\ell+1)},v^{(\ell+1)}, \txi).
+\end{align}
+Sections \ref{subsect:minim-xi}, \ref{subsection-minimization-u} and \ref{subsection-minimization-v} detail how to perform each one of these three minimizations.
+
+% To minimize \eqref{eq:variational-decomposition-noise}, . We detail these two steps in the next two sections. 
+
+The energy $\Ee$ is decreasing at each step. The following theorem ensures the convergence up to a sub-sequence of the algorithm towards a stationary point of $\Ee$.
+
+\begin{thm}\label{thm-convergence}
+	Suppose that $\Phi 1 \neq 0$.
+	The sequence $(u^{(\ell)},v^{(\ell)},\xi^{(\ell)})$ defined in \eqref{eq-block-coord-descent} 
+	is well defined and bounded. Every cluster point of this sequence is a stationary point of $\Ee$. 
+\end{thm}
+\begin{proof}
+	The energy $\Ee$ is non-convex and non-smooth, and we use Theorem 4.1 of Tseng \cite{tseng-proximal}.
+	The energy $\Ee$ is re-written using the notations of \cite{tseng-proximal} as
+	\begin{align*}
+		\Ee(u,v,\xi) &= \frac{1}{2}\norm{f-\Phi(u+v)}^2 + 
+			\lambda T_\xi(v) + \mu J(u) + \chi_{\Cc}(\xi) \\
+			&= f_0(u,v,\xi) + f_1(u) + f_2(v) + f_3(\xi),
+	\end{align*}
+	where $f_1=\mu J$, $f_2=0$ and $f_3=\chi_{\Cc}$.
+	The indicator function is defined as $\chi_{\Cc}(\xi) = +\infty$ if $\xi \notin \Cc$ and $\chi_{\Cc}(\xi)=0$ otherwise. 
+	
+	First, the function $\Ee$ is continuous on the level set
+	\eq{
+		X_0 = \enscond{(u,v,\xi)}{ \Ee(u,v,\xi) \leq \Ee(u^{(0)},v^{(0)},\xi^{(0)}) }.
+	}
+	
+	We then show that  $X_0$ is bounded,	
+	which ensures the existence of convergence sub-sequences. 
+	First we note that the constraint set $\Cc$ defined in \eqref{eq:def_condition_xi} is bounded. 
+	% Then we prove the coercivity of the functional $\Ee(u,v,\xi)$ on $(u,v)$ for any $\xi \in \Cc$. 
+	The texture norm with the weights defined in \eqref{eq:weights-def} satisfies 
+	\eql{\label{eq-proof-eq-1}
+		T_\xi(v) \geq \gamma_0 \norm{ \Psi v }^2 \geq C_1 \norm{v}^2
+	}
+	for some constant $C_1$ because $\Psi$ is injective. 
+	If $\tvcurvweight<1$, the cartoon energy $J(u)$ defined in \eqref{def:Ju-cartoon} is coercive because $J_{Curv}$ is coercive.
+	If $\tvcurvweight=1$, $J(u)=J_{TV}(u)$, and denoting $m(u)=(\sum_{i,j} u[i,j])/N$ the mean of $u$, one has
+	\eql{\label{eq-proof-eq-2}
+		J(u) = \norm{\nabla (u-m(u))}_1 \geq \norm{\nabla (u-m(u))}_2 \geq C_2 \norm{ u - m(u) },
+	}
+	where we have used the fact that $\norm{\cdot}_1 \geq \norm{\cdot}_2$, and 
+	where $C_2>0$ is the smallest non-zero singular value of the gradient $\nabla$.
+	We decompose $f=\Phi \bar f + r$ where $r \in \text{Im}(\Phi)^\bot$, so that
+	\eql{\label{eq-proof-eq-3}
+		 \norm{f-\Phi(u+v)}^2 \geq \norm{\Phi(\bar f - u - v)}^2
+		\geq C_3^2 \norm{m(\bar f)-m(u) - m(v)}^2
+	}
+	where $C_3>0$ is the smallest non zero singular value of $\Phi$, 
+	and where the last inequality makes use of the hypothesis that $\Phi 1 \neq 0$.
+	Putting \eqref{eq-proof-eq-1}, \eqref{eq-proof-eq-2} and \eqref{eq-proof-eq-3} 
+	together proves that
+	\eq{
+		\Ee(u,v,\xi) \geq \frac{C_3^2}{2} \norm{m(\bar f) - m(u) - m(v)}^2 + \lambda C_2 \norm{u-m(u)} + \mu C_1 \norm{v}^2,
+	}
+	and hence the boundedness of  $X_0$.
+	
+	The function $f_0(u,v,\xi)$ is of class $C^1$, since the mapping
+	\eq{
+	 	(u,\xi) \mapsto T_{\xi}(u)=\norm{\Gamma(\xi)\Psi u}^2
+	} 
+	is smooth because $\Gamma$ is a smooth function.
+	The function $\Ee$ satisfies hypothesis (A1) of \cite{tseng-proximal}, and hence to lemma
+	3.1 of \cite{tseng-proximal} shows that $\Ee$ is regular at each point of $X_0$.
+	
+	This shows that $\Ee$ satisfies the hypotheses of Theorem 4.1 in \cite{tseng-proximal} and it concludes the proof.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Minimization with respect to the Orientation Field $\xi$}
+\label{subsect:minim-xi}
+
+If $u$ and $v$ are fixed, we search for the frequency field $\xi$ satisfying
+\begin{equation}
+	\xi = \uargmin{\txi \in \Cc}\ T_\txi(v),
+\end{equation}
+where $T_\xi$ is given by \eqref{eq:normT-def}.
+This requires, for each $p$, to compute
+\begin{equation}
+	 \xi(p) = 
+	 %\uargmin{\txi \in \Cc} \sum_k \gamma_{p,k}(\txi(p))^2 |\dotp{v}{\psi_{p,k}}|^2,
+	 \uargmin{|\theta|>\tau} \sum_k 
+	 \Big(1 - G_\sigma \big(\norm{\xi_k + \theta}\big)\Big)^2\Big(1- G_\sigma \big(\norm{\xi_k - \theta}\big)\Big)^2
+	 |\dotp{v}{\psi_{p,k}}|^2.
+\end{equation}
+%where $\gamma_{p,k}(\txi(p))$ is given by \eqref{eq:weights-def}.
+
+If the width $\sigma$ of the weights \eqref{eq:weights-def} is small enough, this minimization is approximately equivalent to compute $\max_k |\dotp{v}{\psi_{p,k}}|$, which allows us to speed up the computation by defining
+\begin{equation}
+	\xi(p) = 
+	\Delta_\xi \quad \uargmax{k > \frac{\tau}{|\Delta_\xi|}} \quad |\Psi v[p,k]|.
+\end{equation}
+
+Figure~\ref{fig:illust-xi-estim} illustrates the underlying principle of this orientation estimation. For a given point $x_p$, a unique direction and frequency $\xi(p)$ is selected and the corresponding weights $\gamma_{p,k}(\xi)$ are constructed according to \eqref{eq:weights-def}.
+\begin{figure}[!ht]
+ \begin{center}
+ 	 \begin{tabular}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+ 	      (a) & (b) & (c) & (d) \\
+    \includegraphics[width=.23\linewidth]{illust_xi/bugsbunny_textparabole_cadre}&
+    \includegraphics[width=.23\linewidth]{illust_xi/illust_xi_estim_patch}&
+    \includegraphics[width=.23\linewidth]{illust_xi/illust_xi_estim_fourier}&
+    \includegraphics[width=.23\linewidth]{illust_xi/illust_xi_estim_gamma}
+    \includegraphics[width=.028\linewidth]{illust_xi/grayscale}
+    \end{tabular}
+ \end{center}
+ \caption{Illustration of the orientation estimations: (a) the input image $f$, (b) the windowed image around some point $x_p$, (c) the corresponding local Fourier transform $\big(|\dotp{v}{\psi_{p,k}}|\big)_k$ and (d) the weights $\big(\gamma_{p,k}(\xi)\big)_k$ corresponding to the $\xi$ estimated from the local Fourier transform.}
+ \label{fig:illust-xi-estim}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Minimization with respect to the Components $u$ and $v$}
+%\label{subsect:minim-uv}
+%If $\xi$ is fixed, we search for $u$ and $v$ verifying
+%\begin{equation}
+%\label{eq:variational-decomposition-noise-xi-fixed}
+%	(u,v) = \uargmin{\tu,\tv}  \frac{1}{2} \normLdeux{f-\Phi(\tu+\tv)}^2 + \lambda\:J(\tu) + \mu\:\normLdeux{ \Gamma(\xi) \Psi \tv }^2
+%\end{equation}
+%\noindent where $\Gamma(\xi)$ is defined at \eqref{def:Gamma}.
+%This is a convex energy composed by the sum of two quadratic terms and a non-smooth term, $J(\tu)$. Several authors proposed methods to deal with this class of energy~\cite{combettes-pesquer-tv,bect-chambolle-iterative,nesterov-smooth}. 
+
+% We use a block coordinate descent that takes advantages of the fact that the energy to minimize is quadratic in $v$. Starting from some initial $u^{(0)}$ and $v^{(0)}$, the minimization is thus done iteratively on $u$ and $v$. Since the non-differentiable part of the energy is separable, this scheme converges to a global minimum~\cite{tseng-proximal}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Minimization with respect to $u$}
+\label{subsection-minimization-u}
+\label{subsubsec:rof-minim}
+
+If $v$ is fixed and if we set $y = f-\Phi(v^{(i)})$, one minimizes
+\eql{\label{eq:rof-minimization}
+		u^{(i+1)} = \uargmin{\tu}  \frac{1}{2} \normLdeux{y-\Phi(\tu)}^2 + \lambda\:J(\tu).
+}
+
+\paragraph{First case: $\Phi = \Id$} The solution of \eqref{eq:rof-minimization} when $\Phi = \Id$ is then given by
+\eq{
+	u^{(i+1)} = \prox_{\lambda J}(y)
+} 
+where the proximity operator of $\omega J$ for $\omega>0$ and $g \in \RR^N$ is defined as
+\begin{equation}\label{eq-dfn-prox}
+	\prox_{\omega J}(g) = \uargmin{\tg}  \frac{1}{2} \norm{g - \tg}^2 + \omega\:J(\tg)
+\end{equation}
+This corresponds to a denoising problem for which one can use for instance the algorithm proposed by Chambolle~\cite{chambolle-algo-tv}. For sake of completeness, this algorithm is described in  appendix~\ref{sect:appendix}.
+	 
+\bigskip
+	
+\paragraph{General case} The inverse problem corresponding to the general case of $\Phi \neq \Id$ can be solved  using gradient methods such as forward-backward splitting~\cite{combettes-splitting,bect-chambolle-iterative} or Nesterov algorithms~\cite{nesterov-smooth}, see also~\cite{aujol-algo} for an overview of these methods. 
+
+In the numerical experiments, we use the forward-backward splitting scheme. Starting from some initial $w^{(0)}$, one iterates between
+\begin{itemize}
+	\item a gradient descent step of the minimization of the data term,
+		\begin{equation}\label{eq:algo-regul1}
+ 			\bar w^{(n)} = w^{(n)} + \alpha \Phi^*        ( y - \Phi w^{(n)})
+		\end{equation}
+	\item a denoising step over the current estimate $\bar w^{(n)}$,
+		\begin{equation}\label{eq:algo-regul2}
+			w^{(n+1)} = \prox_{\lambda\alpha J}(\bar w^{(n)})
+		\end{equation}
+		where $\prox_{\lambda\alpha J}(\bar w^{(n)})$ is the proximity operator defined in \eqref{eq-dfn-prox} for $\omega=\lambda\alpha$, that is computed  using the iterative algorithm detailed in Appendix~\ref{sect:appendix}.
+\end{itemize}
+
+\bigskip 
+
+\noindent If the gradient step size $\alpha$ in \eqref{eq:algo-regul1} satisfies $0<\alpha<\frac{2}{\norm{\Phi^*\Phi}}$, then $w^{(n)}$ in \eqref{eq:algo-regul1} and \eqref{eq:algo-regul2} converges to $u^{(i+1)}$, a global minimizer of \eqref{eq:rof-minimization}. In the inpainting case, when $\Phi$ is the masking operator given by \eqref{eq:inpainting-pbm}, we have $\norm{\Phi^*\Phi} = 1$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Minimization with respect to $v$} 
+\label{subsection-minimization-v}
+
+If $u$ is fixed, one minimizes
+\eql{\label{eq:min_on_v}
+	v^{(i+1)} = \uargmin{\tv} \frac{1}{2} \normLdeux{f-\Phi(u^{(i+1)})-\Phi(\tv)}^2 + \mu\:\normLdeux{ \Gamma(\xi) \Psi \tv }^2,
+}
+
+Computing the gradient of \eqref{eq:min_on_v}, we obtain that $v^{(i+1)}$ satisfies	
+\begin{equation}
+\label{eq:conj-grad}
+	(2 \mu \Psi^* \Gamma^2 \Psi + \Phi^*\Phi) v^{(i+1)} = \Phi^*(f-\Phi(u^{(i+1)}))
+\end{equation}
+and the solution $v^{(i+1)}$ is computed with a conjugate gradient descent, since $2 \mu \Psi^* \Gamma^2 \Psi + \Phi^*\Phi$ is a positive symmetric operator.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Case of the Decomposition of a Noise Free Image}
+\label{subsec:decomp-noise-free}
+
+If the input image $f$ does not contain any noise, one would like to decompose $f$ into only two components, the sketch $u$ and the texture $v=f-u$. This requires to solve
+\begin{equation}
+	\label{eq:decomp-noise-free}
+	(u,\xi) = \uargmin{\tu,\ \txi \in \Cc}\ \frac{1}{2}\:T_\txi(f-\tu) + \lambda\:J(\tu).
+\end{equation}
+The minimization step on $\xi$ is the same as the one described in Section~\ref{subsect:minim-xi}, but the second step on $u$ should be modified. When $\xi$ is fixed, using the definition \eqref{eq:normT-def} of $T_\xi$ and setting $y = \Gamma(\xi) \Psi f$, the minimization on $u$ can be rewritten
+\begin{equation}
+ u = \uargmin{\tu}\  \frac{1}{2}\:\normLdeux{ y - \Gamma(\xi) \Psi (\tu)}^2 + \lambda\:J(\tu).
+\end{equation}
+This minimization corresponds to a regularized inverse problem associated to the operator $\Gamma(\xi) \Psi$. It can therefore be solved using the forward-backward splitting algorithm described in Section~\ref{subsubsec:rof-minim}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Numerical Examples}
+\label{sect:numerical}
+For our numerical experiments, we use a non-op\-ti\-mi\-zed implementation in Matlab and, for an image of size $512\times512$, the processing time is about $10$~minutes. As mentioned in the section~\ref{subsubsec:rof-minim}, we use a forward-backward splitting scheme for the minimizing step on $u$. The computation time should be reduced by using Nesterov algorithms~\cite{nesterov-smooth} instead. However the computation of the decomposition in the local Fourier frame and its dual operator is the most time-consuming step and it should be optimized if better computational time is desired.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Image decomposition and denoising}
+
+For the decomposition and denoising problem, we take $\Phi = \Id$ and solve \eqref{eq:variational-decomposition-noise} using the algorithm described above. We choose $J(u) =  \normTV{u}$ for the cartoon functional, which corresponds to taking $\tvcurvweight=1$ in \eqref{def:Ju-cartoon}.
+
+%%
+\paragraph{Cartoon+texture decomposition.}
+
+Figure~\ref{fig:toy-example-bugsbunny} shows an input image $f$, $256\times256$ generated by addition of a cartoon picture\footnote{This picture is a frame from the animated cartoon ``Falling Hare'' (1943). This cartoon is in the public domain.} and a synthetic texture whose orientation and frequency vary spatially ($\normi{f}=3$).
+Figure~\ref{fig:toy-example-bugsbunny-decomposition} presents the decomposition results obtained with different classical methods on this noise free image: the $TV-L^2$ model of \cite{rudin-tv}, the $TV-G$ model of Y. Meyer \cite{meyer-oscillating} with the implementation of \cite{aujol-decomposition}, the $TV-L^1$ model with the implementation of \cite{ChambollePock},
+the $TV-H^{-1}$ model \cite{osv}  with the implementation of \cite{Aujol05}, and the $TV$-Gabor model \cite{aujol-tv-hilbert}.  For each of these methods we chose the first set of parameters which provides a total extraction of the texture. For our method we chose $\lambda=0.1$, $q=16$, $\Delta_x=4$. As can be seen, the approach developed in this paper provides much better result. This is due to the fact that the texture in the image of Figure~\ref{fig:toy-example-bugsbunny} lies exactly in the model of the paper. In particular, the $TV-L^1$ model performs poorly on this type of texture, since it splits an image into geometry and texture on a texton criterion \cite{DuvalAujolGousseau}.
+
+
+% We applied the $TV-L^2$ method~\cite{rudin-tv} and we chose the smallest parameter $\lambda$ (on the total variation norm) which provides a total extraction of the texture (here $\lambda=0.9$). For our method we chose $\lambda=0.1$, $q=16$, $\Delta_x=4$. 
+
+
+\begin{figure}[!ht]
+ \begin{center}
+   \begin{tabular*}{\textwidth}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+    (a)  & (b) & (c) \\
+    \includegraphics[width=.32\linewidth]{decomposition/Bugsbunny_texture/bugsbunny_textparabole}&
+    \includegraphics[width=.32\linewidth]{decomposition/Bugsbunny_texture/struct_originale}&
+    \includegraphics[width=.32\linewidth]{decomposition/Bugsbunny_texture/text_originale}\\
+   \end{tabular*}
+ \end{center}
+ \caption{A synthetic example. (a) the input image ; (b) and (c) respectively the structure and texture components used to produce the image.}
+ \label{fig:toy-example-bugsbunny}
+\end{figure}
+
+\begin{figure}[!ht]
+ \begin{center}
+   \begin{tabular*}{\textwidth}{@{}c@{\hspace{3mm}}c@{\hspace{3mm}}c@{}}
+      (a) $TV-L^1$ & (b)  $TV-L^2$ & (c) $TV-G$ \\  
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/TVL1_lambda0p7_struct}&
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/TVL2_mu0p9_struct}&
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/TVG_mu0p8_struct}\\
+      (d) & (e) & (f) \\  
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/TVL1_lambda0p7_text}&
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/TVL2_mu0p9_text}&
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/TVG_mu0p8_text}\\
+      (g) $TV-H^{-1}$ & (h) $TV-$Gabor & (i) Our method\\  
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/TVHm1_l25_struct}&
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/TVGabor_sig42_freq82_l0p07_struct}&
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/Hilbert_256_la0p1_q16_dx4_sig1p5_struct}\\
+      (j) & (k) & (l) \\  
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/TVHm1_l25_text}&
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/TVGabor_sig42_freq82_l0p07_text}&
+      \includegraphics[width=.308\linewidth]{decomposition/Bugsbunny_texture/Hilbert_256_la0p1_q16_dx4_sig1p5_text}
+   \end{tabular*}
+ \end{center}
+ \caption{A synthetic example. (a) and (d): decomposition results with $TV-L^1$ ; (b) and (e): decomposition results with $TV-L^2$ ; (c) and (f): decomposition results with $TV-G$ ; (g) and (j): decomposition results with $TV-H^{-1}$ ; (h) and (k): decomposition results with $TV-$Gabor ; (i) and (l) : decomposition results with our adapted TV-Hilbert method. The obtained result is almost perfect. }
+ \label{fig:toy-example-bugsbunny-decomposition}
+\end{figure}
+
+Figure~\ref{fig:fish_decomposition} presents an example of the decomposition of a natural image containing locally parallel textures. The input image $f$, $389\times389$, is in the first column. The second column presents the result of the $TV-L^2$ method~\cite{rudin-tv},  we chose the smallest parameter $\lambda$ (on the total variation norm) which provides a total extraction of the texture (here $\lambda=0.4$). And finally our method is shown in the last column (we chose $\lambda=0.1$, $q=32$, $\Delta_x=10$). As can be seen, whereas both texture components contain the locally parallel patterns of the fish, our method achieves a better decomposition in the sense of more details of the background are present in the geometric component.
+
+\begin{figure}[!ht]
+ \begin{center}
+   \begin{tabular*}{\textwidth}{@{}c@{\hspace{3mm}}c@{\hspace{3mm}}c@{}}
+   			& (a) & \\
+   			& \includegraphics[width=.32\linewidth]{decomposition/fish/fish_orig}  & \\
+        (b) & (c)  & (d) \\  
+      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_struct_L2_0p40}  & 
+      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_text_L2_0p40}  & 
+      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_text_contrast_L2_0p40}  \\
+        (e) & (f)  & (g) \\  
+        \includegraphics[width=.32\linewidth]{decomposition/fish/fish_struct_l0p1_q32_dx10_sig1p4_tol18}  &
+      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_text_l0p1_q32_dx10_sig1p4_tol18}  &
+      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_text_contrast_l0p1_q32_dx10_sig1p4_tol18}  \\
+   \end{tabular*}
+ \end{center}
+ \caption{A natural image. (a): the input image ; (b) and (c): decomposition results with $TV-L^2$ ; (d): contrast enhanced version of (c) ; (e) and (f): decomposition results with our adapted TV-Hilbert method ; (g)  contrast enhanced version of (f)}
+ \label{fig:fish_decomposition}
+\end{figure}
+
+
+%\begin{figure}[!ht]
+% \begin{center}
+%   \begin{tabular*}{\textwidth}{@{}c@{\hspace{3mm}}c@{\hspace{3mm}}c@{}}
+%        & (b)  & (c) \\  
+%        & 
+%      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_struct_L2_0p40}  & 
+%      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_struct_l0p1_q32_dx10_sig1p4_tol18}  \\
+%        (a) & (d)  & (e) \\  
+%      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_orig}  & 
+%      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_text_L2_0p40}  & 
+%      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_text_l0p1_q32_dx10_sig1p4_tol18}  \\
+%       & (f)  & (g) \\  
+%       & 
+%      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_text_contrast_L2_0p40}  & 
+%      \includegraphics[width=.32\linewidth]{decomposition/fish/fish_text_contrast_l0p1_q32_dx10_sig1p4_tol18}  \\
+%   \end{tabular*}
+% \end{center}
+% \caption{A natural image. (a): the input image ; (b) and (d): decomposition results with $TV-L^2$ ; (f): contrast enhanced version of (d) ; (c) and (e): decomposition results with our adapted TV-Hilbert method ; (g)  contrast enhanced version of (e)}
+% \label{fig:fish_decomposition}
+%\end{figure}
+
+%%
+\paragraph{Cartoon+texture+noise decomposition.}
+
+In Figure~\ref{fig:bugsbunny_fingerprint_denoising} an image $f_0$ composed of a cartoon picture and a fingerprint texture (the size of $f_0$ is $512\times512$ and $\normi{f_0}=3$) is degraded by a Gaussian noise of standard deviation $\sigma=0.2$. The noisy image $f$ is then decomposed into three components $u$, $v$, and $w$ using our method with the following parameters $\lambda=0.1$, $\mu=0.3$, $q=48$ and $\Delta_x=16$. An orientation field $\xi$ is therefore also computed. Since $u$ captures the sketch of the image, $v$ the locally parallel patterns and $w$ the noise, we can reconstruct a restored version $u+v$ of the noisy image.
+
+\begin{figure}[!ht]
+   \begin{center}
+     \begin{tabular*}{\textwidth}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+           & (a) \qquad $f_0$ & \\
+       &\includegraphics[width=.32\linewidth]{decomposition/Bugsbunny_FingerPrint/Bugsbunny_FingerPrint}& \\
+       (b) \qquad $f$ & (c) \qquad $u+v$ & (d) \qquad $\xi$ \\
+       \includegraphics[width=.32\linewidth]{denoising/Bugsbunny/Bugsbunny_FingerPrint_Noise}&
+       \includegraphics[width=.32\linewidth]{denoising/Bugsbunny/u_plus_v}&
+       \includegraphics[width=.32\linewidth]{denoising/Bugsbunny/final_orientations}\\
+     	(e) \qquad $u$ & (f) \qquad $v$ & (g) \qquad $w$ \\
+     	\includegraphics[width=.32\linewidth]{denoising/Bugsbunny/u}&
+       \includegraphics[width=.32\linewidth]{denoising/Bugsbunny/v}&
+       \includegraphics[width=.32\linewidth]{denoising/Bugsbunny/w}\\
+     \end{tabular*}
+   \end{center}
+   \caption{(a) the original noise free image ; (b) the input noisy image $f$ ; (c) the restored image $u+v$ ; (d) the estimated orientations of oscillating patterns $\xi$ ; (e) the sketch $u$ of the image ; (f) the texture content $v$ ; (g) the noise $w$.}
+   \label{fig:bugsbunny_fingerprint_denoising}
+\end{figure}
+
+One should be careful that the comparison with TV-denoising is only intended to show the relevance of our texture model to extract oscillating components, since our cartoon model is the TV energy. The TV model should not be considered as a state of the art method for denoising, and we give below examples of state of the art denoising methods on a natural image.
+
+
+%%
+\paragraph{Comparison with state of the art denoising methods.}
+
+Figure~\ref{fig:barbara_denoising} shows the decomposition and denoising process applied to the ``Barbara'' image $f_0$ degraded by a Gaussian noise of standard deviation $\sigma=0.15$. The size of $f_0$ is $512\times512$ and we have $\normi{f_0}=1$. 
+
+Figure~\ref{fig:barbara_denoising_comparison} compares our result with Portilla et al. denoising method~\cite{portilla-denoise}, based on scale mixtures of Gaussians over the wavelet domain, with the non-local means methods~\cite{buades-nl-means}, and with the recent state of the art BM3D method \cite{dabov-bm3d}. 
+
+We use the Signal-to-Noise Ratio (SNR) measure of distortion between the original noiseless image $f_0$ and the denoised image $f^\star$
+\eq{
+	\text{SNR}(f_0,f^\star) = 20 \log_{10} \frac{\normLdeux{f_0}}{\normLdeux{f_0-f^\star}}.
+}
+We used $\lambda=0.2$, $\mu=5$, $q=32$ and $\Delta_x=8$ as parameters for our method. 
+
+% For each method, we select the optimal parameters to achieve the best SNR result. For the TV-denoising method, we choose $\lambda=0.1$. 
+% The best SNR result is provided by our method which best restores the directional textures thanks to our adaptive norm.
+% The decomposition between structure and texture provides a better restoration of the texture and therefore a better SNR. Of course, this is true only because the images considered here lie into our modeling of texture. It would not be the case otherwise. 
+
+We note that our method improves the wavelet-based statistical modeling of Portilla et al. denoising~\cite{portilla-denoise} and the non-local means methods~\cite{buades-nl-means}, but it fails to improve over a more recent state of the art denoising method, BM3D~\cite{dabov-bm3d}. Zoom on the textured region of the image shows that our method gives satisfactory results on textured part, but does not performs as good as the state of the art in region containing either edges or complicated texture patterns.  This is consistent with the fact that we use a TV regularization for the cartoon layer, and that our model is tailored for highly geometric textures.
+
+\begin{figure}[!ht]
+   \begin{center}
+   	\begin{tabular*}{\textwidth}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+   		           (a)          & (b) Noisy input image $f$ & (c)                          \\
+   		 Original image $f_0$   &         (SNR = 10.25 dB)     &      Restored image $u+v$    \\ 
+       \includegraphics[width=.32\linewidth]{denoising/Barbara/barbara_original}&
+       \includegraphics[width=.32\linewidth]{denoising/Barbara/barbara_gaussnoise_sigma0p15}&
+       \includegraphics[width=.32\linewidth]{denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sigma0p15_hilbert_restored}\\
+     	(d) $u$ & (e) $v$ & (f) $w$ \\
+       \includegraphics[width=.32\linewidth]{denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sigma0p15_hilbert_struct}&
+       \includegraphics[width=.32\linewidth]{denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sigma0p15_hilbert_text}&
+       \includegraphics[width=.32\linewidth]{denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sigma0p15_hilbert_noise}
+     \end{tabular*}
+   \end{center}
+   \caption{(a) the original noise free image $f_0$ ; (b) the noisy input image $f$ ; (c) the restored image $u+v$ ; 
+   (d) the sketch $u$ of the image ; (e) the texture content $v$ ; (f) the noise $w$.} 
+   \label{fig:barbara_denoising}
+\end{figure}
+
+
+\begin{figure}[!ht]
+   \begin{center}
+		\begin{tabular}{M{0.35\textwidth}M{0.28\textwidth}M{0.28\textwidth}} 
+     	(a) TV (17.34~dB) & \includegraphics[width=\linewidth]{denoising/Barbara/TV_mu0p1/barbara_gaussnoise_TV_mu0p1_restored}&\includegraphics[width=\linewidth]{denoising/Barbara/TV_mu0p1/barbara_gaussnoise_TV_mu0p1_restored-zoom}
+     		\tabularnewline 
+     	(b) Portilla et al. (19.62~dB)& \includegraphics[width=\linewidth]{denoising/Barbara/Portilla/barbara_portilla_7x7_parent1}&	\includegraphics[width=\linewidth]{denoising/Barbara/Portilla/barbara_portilla_7x7_parent1-zoom}
+     		\tabularnewline 
+     	(c) Non-local means (19.75~dB) & \includegraphics[width=\linewidth]{denoising/Barbara/NLmeans/NLmeans}&   	  	\includegraphics[width=\linewidth]{denoising/Barbara/NLmeans/NLmeans-zoom} 
+     		\tabularnewline 
+     	(d) Our method (19.93~dB) &\includegraphics[width=\linewidth]{denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sigma0p15_hilbert_restored}&	\includegraphics[width=\linewidth]{denoising/Barbara/Hilbert_0p15_mu5_sig2p2_tol6/barbara_gaussnoise_sigma0p15_hilbert_restored-zoom}
+     		\tabularnewline 
+     	(e) BM3D (21.8~dB)&\includegraphics[width=\linewidth]{denoising/Barbara/BM3D/barb_denoised_BM3D}&\includegraphics[width=\linewidth]{denoising/Barbara/BM3D/barb_denoised_BM3D-zoom}
+		\end{tabular}
+   \end{center}
+   \caption{Denoising of image $f$ from Fig.~\ref{fig:barbara_denoising}.  (a) TV-denoising ; (b) result of 
+Portilla et al. method~\cite{portilla-denoise} ; (c) resultat of the Non-Local means method~\cite{buades-nl-means} (d) our method ; (e) result of BM3D method~\cite{dabov-bm3d}.} 
+   \label{fig:barbara_denoising_comparison}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Image Decomposition and Inpainting}
+\label{subsec:inpainting}
+
+Let us recall that inpainting aims at restoring an image $f_0$ from which a set $\Omega \subset \{0,\ldots,n-1\}^2$ of pixels is missing. It corresponds to the inversion of the ill posed problem $f = \Phi f_0 + w$ where $\Phi$ is defined as 
+\eql{
+		(\Phi f_0)(x) = 
+		\choice{
+			0 \qifq x \in \Omega,\\
+			f_0(x) \qifq x \notin \Omega.
+		}
+}
+and $w$ is some additive noise.
+We search for the image $f_0$ as a decomposition $f_0 \approx u + v$ where $J(u)$ and $T_\xi(v)$ are small, and $\xi$ is optimized during the inpainting process. This corresponds to the solution of \eqref{eq:variational-decomposition-noise} where the operator $\Phi$ is given by \eqref{eq:inpainting-pbm} and $y$ is the image with missing parts one wants to inpaint. For the cartoon model, we take $J(u)$ given by \eqref{def:Ju-cartoon}, which mixes the total variation norm and the $\lun$-norm of the curvelet decomposition of $u$. An experimental exploration leads us to choose $\tvcurvweight=0.75$ which gives a good compromise between the effects of each energy.
+
+%%
+\paragraph{Inpainting of a synthetic image.}
+
+Figure~\ref{fig:bugsbunny_inpainting} shows an example of inpainting reconstruction of the image $f_0$ of size $512\times512$ from Figure~\ref{fig:bugsbunny_fingerprint_denoising} degraded by randomly placed holes, which consists in 350 squares of $15 \times 15$ pixels each. We use the same parameters as in Figure~\ref{fig:bugsbunny_fingerprint_denoising}. 
+The texture is well reconstructed thanks to the estimation of the orientations and to the overlapping of the local Fourier windows. 
+
+\begin{figure}[!ht]
+   \begin{center}
+     \begin{tabular}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+       (a) $y$  &  (b) $u$  &  (c) $v$ \\
+       \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/y}&
+       \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_struct}&
+       \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_text}
+      \end{tabular}
+      \begin{tabular*}{.6\textwidth}{@{\extracolsep{\fill}}  cc}
+      	 (d) TV Inpainting & (e) $u+v$ \\
+      	 \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/reconstruct_siz15_rho0p3_tv_l0p3_rho0p3}&
+        \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/Hilbert_size15_rho0p3_la0p06_mu0p1_sig1p7_inpainted}
+      \end{tabular*}
+   \end{center}
+   \caption{(a) the image $y$ to inpaint degraded by randomly chosen holes in black, the original image is $f_0$ in Fig.~\ref{fig:bugsbunny_fingerprint_denoising} ; (b) the inpainted geometric component $u$, (c) the inpainted texture component $v$ ; (e) ``TV Inpainting'' using only a TV regularization ; (d) the reconstruction $u+v$ using our method.}
+    \label{fig:bugsbunny_inpainting}
+\end{figure}
+
+
+%%
+\paragraph{Comparison with state of the art inpainting methods.}
+
+Figure~\ref{fig:barbara_inpainting} shows a second example of inpainting reconstruction for the ``Barbara'' image. We use the same parameters as in Figure~\ref{fig:barbara_denoising}. For comparison, we also show the result of inpainting using TV regularization, the ``patchworks'' method from Perez et al.~\cite{Perez04b} and the MCA method~\cite{fadili-inpainting2}, using a curvelet dictionary for the cartoon component and a local discrete cosine transform for the texture part, that corresponds to take $T(v)=\normu{\Psi_{LC} v}$ where $\Psi_{LC}$ is the local cosine transform. The enlargements in the second and third columns illustrate the differences between the different methods and our framework. 
+
+As far as the MCA method is concerned,  on the one hand, our reconstruction of the hatched chair (top-right corner of the original image) selects the main orientation since we are modeling locally parallel patterns. Our method is in fact designed to deal with strongly parallel textures which can be locally explained by a single frequency, whereas the MCA method based on sparsity seems to be able to handle more general cases such as the one presented in the second column.  On the other hand, for parts of the image with locally parallel patterns, our method achieves a better reconstruction of the directions of the texture inside the missing parts thanks to its adaptivity. This is clearly visible in the third column.
+
+Figure~\ref{fig:barbara_inpainting} also shows the result of a copy-paste based method~\cite{Perez04b}, even though it is beyond the scope of this paper to make such comparisons, since the focus is on energy minimization based methods. Nevertheless, the enlargements in the second and third columns show that such a method reconstructs very well not-oriented texture parts of the image (first column), whereas it fails to reconstruct properly the orientation of the locally parallel texture present in the third column.
+
+\begin{figure}[!ht]
+   \begin{center}
+		\begin{tabular}{M{0.07\textwidth}M{0.27\textwidth}M{0.27\textwidth}M{0.27\textwidth}} 
+      (a) & \includegraphics[width=\linewidth]{inpainting/Barbara/y}               & \includegraphics[width=\linewidth]{inpainting/Barbara/y_zoom2}   & \includegraphics[width=\linewidth]{inpainting/Barbara/y_zoom}
+      	\tabularnewline 
+      (b) TV & \includegraphics[width=\linewidth]{inpainting/Barbara/TV}           & \includegraphics[width=\linewidth]{inpainting/Barbara/TV_zoom2}  &	\includegraphics[width=\linewidth]{inpainting/Barbara/TV_zoom}
+      	\tabularnewline 
+      (c) PatchWorks & \includegraphics[width=\linewidth]{inpainting/Barbara/Perez}& \includegraphics[width=\linewidth]{inpainting/Barbara/Perez_zoom2}&	\includegraphics[width=\linewidth]{inpainting/Barbara/Perez_zoom}
+      	\tabularnewline 
+      (d) MCA & \includegraphics[width=\linewidth]{inpainting/Barbara/MCA}         & \includegraphics[width=\linewidth]{inpainting/Barbara/MCA_zoom2} & \includegraphics[width=\linewidth]{inpainting/Barbara/MCA_zoom}
+      	\tabularnewline 
+      (e) Our method & \includegraphics[width=\linewidth]{inpainting/Barbara/Hilbert}& \includegraphics[width=\linewidth]{inpainting/Barbara/Hilbert_zoom2}& \includegraphics[width=\linewidth]{inpainting/Barbara/Hilbert_zoom}
+       	\end{tabular}
+   \end{center}
+   \caption{Inpainting of a degraded image, the original image is $f_0$ in Fig.~\ref{fig:barbara_denoising}. First column: (a) the image $y$ to inpaint ; (b) reconstruction using a TV regularization ; (c) result of  the ``patchworks'' method~\cite{Perez04b} ; (d) result of MCA~\cite{fadili-inpainting2} with curvelets and local discrete cosine dictionaries ; (e) our reconstruction. 
+   Second and third columns: enlargement of parts of the same images. }
+   \label{fig:barbara_inpainting}
+\end{figure}
+
+
+%\begin{figure}[!ht]
+%       \begin{center}
+%         \begin{tabular}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+%         	     (a)   &   (b)   &  (c)   & (d)   \\
+%           \includegraphics[width=.24\linewidth]{inpainting/Barbara/y}&
+%           \includegraphics[width=.24\linewidth]{inpainting/Barbara/TV}&
+%       		\includegraphics[width=.24\linewidth]{inpainting/Barbara/MCA}&
+%       		\includegraphics[width=.24\linewidth]{inpainting/Barbara/Hilbert}\\
+%       		\includegraphics[width=.24\linewidth]{inpainting/Barbara/y_zoom2}&
+%       		\includegraphics[width=.24\linewidth]{inpainting/Barbara/TV_zoom2}&
+%       		\includegraphics[width=.24\linewidth]{inpainting/Barbara/MCA_zoom2}&
+%       		\includegraphics[width=.24\linewidth]{inpainting/Barbara/Hilbert_zoom2}\\
+%       		 \includegraphics[width=.24\linewidth]{inpainting/Barbara/y_zoom}&
+%       		\includegraphics[width=.24\linewidth]{inpainting/Barbara/TV_zoom}&
+%       		\includegraphics[width=.24\linewidth]{inpainting/Barbara/MCA_zoom}&
+%       		\includegraphics[width=.24\linewidth]{inpainting/Barbara/Hilbert_zoom}
+%       	\end{tabular}
+%   \end{center}
+%   \caption{Inpainting of a degraded image, the original image is $f_0$ in Fig.~\ref{fig:barbara_denoising}. Fist row: (a) the image $y$ to inpaint ; (b) reconstruction using a TV regularization ; (c) result of MCA~\cite{fadili-inpainting2} with curvelets and local discrete cosine dictionaries ; (d) our reconstruction. 
+%   Second and third row: enlargement of parts of the same images. }
+%   \label{fig:barbara_inpainting}
+%\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Highly non-Convex Generalization of our Model}
+\label{sect:non-convex}
+
+Similarly to other existing convex regularization methods, our approach suffers from a contrast attenuation in the center of the inpainted area. Section \ref{subsec-amplitude} describes a higly non-convex functional that fixes this issue. Another issue with our locally parallel texture model is that it favors the apparition of patterns with a sinusoidal profile. Section \ref{subsec-profile} thus introduces a ``rendering function'' that enables the reconstruction of arbitrary locally parallel textures.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Amplitude Boosting}\label{subsec-amplitude}
+
+%%%
+\paragraph{Contrast attenuation problem}
+
+Although convex methods 
+%such as the one presented in the previous section 
+provide good solutions to inpaint small or medium holes, this
+class of methods is not efficient to inpaint large holes.
+Notice that the functional presented in the previous section is convex with respect to the texture $v$. We therefore will refer to this previous model as \emph{convex} energy, as opposed to the new one we introduce here. 
+ The minimization of convex energies causes some attenuation in the reconstruction, as shown on Figure~\ref{fig:convex_nonconvex}. This texture inpainting is computed by solving 
+\eq{
+	\uargmin{\tv,\ \txi \in \Cc} \frac{1}{2} \normLdeux{y-\Phi \tv}^2 + \mu\:T_\txi(\tv)
+} 
+which corresponds to taking $\lambda=\infty$ in \eqref{eq:variational-decomposition-noise}.
+
+We thus propose a new non-convex energy to cope with large holes. The
+new texture functional $T_{A,\xi}$ depends both on the orientation
+field $\xi$ and on some amplitude field 
+\eq{
+	A : \{1,\ldots,n/\Delta_x\}^2 \rightarrow \RR^+.
+} 
+For a point $x_p = p\Delta_x$ in the image plane, $A(p)$ is an estimation of the amplitude of the oscillating pattern around $x_p$. The new texture functional imposes a given amplitude field inside the missing parts which annihilates the attenuation problem.
+
+\begin{figure}[!ht]
+   \begin{center}
+   		\begin{tabular}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+   				   $y$    &   $v_{convex}$  &  $v_{non-convex}$ \\
+           \includegraphics[width=.32\linewidth]{convex_nonconvex/y_sans_h}&
+       		\includegraphics[width=.32\linewidth]{convex_nonconvex/convex}&
+       		\includegraphics[width=.32\linewidth]{convex_nonconvex/nonconvex}
+       \end{tabular}
+   \end{center}
+   \caption{From left to right: the image $y$ to inpaint, the result $v_{convex}$ of our convex
+inpainting and the result $v_{non-convex}$ of our non convex
+inpainting. }
+   \label{fig:convex_nonconvex}
+\end{figure}
+
+%%%
+\paragraph{Non-convex texture functional}
+
+The non-convex energy $T_{A,\xi}(v)$ sums over all points $x_p=p\Delta_x$ the distance between the magnitude $A_p$ of the local Fourier coefficients of $v$ and a pure pattern $A(p)\chi_{\xi(p)}$ of amplitude $A(p)$ and orientation $\xi(p)$. It is therefore defined as
+\begin{equation}\label{eq:non-convex-def}
+	T_{A,\xi}(v) = \sum_p \norm{A_p - A(p)\chi_{\xi(p)} }^2 = 	
+	 \sum_{p,k} ( A_p(k) - A(p)\chi_{\xi(p)}(k)  )^2
+\end{equation}
+
+%%%
+\paragraph{Pure oriented pattern}
+
+The magnitude of the local Fourier transform of the texture $v$ corresponds to 
+\eq{
+	A_p  = \{ A_p(k) \}_k 
+	\qwhereq 
+	A_p(k) = |\dotp{v}{\psi_{p,k}}|_\epsilon.
+}
+We use a regularized absolute value 
+\eq{
+	|a|_\epsilon = \sqrt{|a|^2+\epsilon},
+} 
+where $\epsilon>0$ is a small positive number chosen to avoid numerical instabilities. 
+
+The pure pattern $\chi_{\xi}$ is defined as the magnitude of the local
+Fourier transform of a pure sinusoidal function $S_\xi$
+\begin{equation} \label{eq:weights-non-convex}
+	\chi_{\xi}(k) = |\dotp{ S_{\xi} }{ \psi_{0,k} }|_\epsilon
+	\qwhereq
+	S_{\xi}(x)=\sin( 2\pi \dotp{x}{\xi} ).
+\end{equation}
+
+Figure \ref{fig:gamma-vs-chi} compares, for a given position $x_p$,
+the weights $\{ \gamma_{p,k}(\xi) \}_k$ of the convex texture model defined in
+\eqref{eq:weights-def} with the pure pattern $\chi_{\xi(p)}$ defined in \eqref{eq:weights-non-convex}. Whereas the convex weights correspond to a double ``potential well'', the non-convex pattern corresponds to a ``double-bump'' of fixed height. This difference is crucial since the amplitude $A_p$ of the reconstructed texture is boosted in the non-convex setting due to the similarity term $\norm{A_p - A(p)\chi_{\xi(p)} }$.
+
+\begin{figure}[!ht]
+   \begin{center}
+   		\begin{tabular}{cc}
+   				   $\{ \gamma_{p,k}(\xi) \}_k$    &   $\{ \chi_{\xi(p)}(k) \}_k$ \\
+           \includegraphics[width=.4\linewidth]{gamma_vs_chi/gamma}\hspace{.1cm}&\hspace{.1cm}
+       		\includegraphics[width=.4\linewidth]{gamma_vs_chi/chi}
+       \end{tabular}
+   \end{center}
+   \caption{Left: graphical representation of the convex weights $\{ \gamma_{p,k}(\xi) \}_k$ ; right: graphical representation of the pure pattern $\chi_{\xi(p)}$ used by the non-convex functional. }
+   \label{fig:gamma-vs-chi}
+\end{figure}
+
+%%%
+\paragraph{Estimating the amplitude field}
+
+In our numerical experiments, this field $A(p)$ is estimated during the inpainting process from the texture $v = v^{(i)}$ obtained at iteration $i$ of the algorithm.  The automatic computation of a texture amplitude field with missing information is a difficult problem, and we assume here that this field varies smoothly over the image plane, which is a reasonable assumption for many natural textures. 
+
+For positions $x_p$ located at a distance greater than $q/2$ from the mask $\Omega$,
+\eq{
+	p \in U_{\Omega} = \enscond{ p }{ d(x_p,\Omega)>q/2 }
+	\qwhereq
+	d(x_p,\Omega) = \umin{y \in \Omega} \norm{x_p-y}
+}
+the amplitude field $A(p)$ is computed by minimizing  $\norm{A_p - A(p)\chi_{\xi(p)} }^2$ since there is no missing information.
+If $v=v^{(i)}$ and $\xi(p)$ are fixed, the amplitude $A(p)$ is thus defined as
+\begin{equation}
+	A(p) = \frac{ \dotp{A_p}{\chi_{\xi(p)}} }{ \norm{\chi_{\xi(p)}}^2 }.
+\end{equation}
+
+For the other remaining positions $p \notin U_{\Omega}$, the amplitude $A(p)$ is computed by a smooth interpolation over the missing region, obtained by solving
+\begin{equation}
+	\foralls p \notin U_{\Omega}, \quad \Delta A(p) = 0, \qquad
+	\foralls p \in U_{\Omega}, \quad A(p) = \frac{ \dotp{A_p}{\chi_{\xi(p)}} }{ \norm{\chi_{\xi(p)}}^2 }
+\end{equation}
+where $\Delta$ is the Laplacian second derivative operator. The full field $A$ is thus computed by conjugate gradient descent. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{General Oscillation Profile}
+\label{subsec-profile}
+
+%%%
+\paragraph{Sinusoid texture profile problem}
+
+In the inpainting problem, the reconstruction inside the missing regions is only constrained by the two terms $J(u)$ and $T(v)$. There is no fidelity term inside these regions. For points $x$ around $x_p = p \Delta_x$ close to the center of a missing region, the inpainted texture $v$ is thus well approximated by a single frequency
+\eql{\label{eq-texture-approx}
+	v(x) \approx A(p) \sin( 2\pi \dotp{x}{\xi(p)}  + \phi )
+}
+where $\phi \in \RR$ is a local phase. 
+
+Figure \ref{fig:without-h-with-h} (b) shows an example of this issue, where this texture inpainting result is obtained by solving 
+\eq{
+	\uargmin{\tv,\ \txi \in \Cc} \frac{1}{2} \normLdeux{y-\Phi \tv}^2 + \mu\:T_\txi(\tv),
+} 
+which corresponds to taking $\lambda=\infty$ in \eqref{eq:variational-decomposition-noise}.
+
+\begin{figure}[!ht]
+   \begin{center}
+    		\begin{tabular}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+    		     (a) $y$    &   (b)  $v_{\Id}$ & (c) $v_{h}$  &  (d) $v_{h}^{[h]}$  \\
+       		\includegraphics[width=.24\linewidth]{convex_nonconvex/y_avec_h}&
+       		\includegraphics[width=.24\linewidth]{convex_nonconvex/v_sans_h}&
+       		\includegraphics[width=.24\linewidth]{convex_nonconvex/v_avec_h}&
+       		\includegraphics[width=.24\linewidth]{convex_nonconvex/hv_avec_h}
+       \end{tabular}
+   \end{center}
+   \caption{(a) the image $y$ to inpaint ; (b) the result $v_{\Id}$ of our inpainting with $h=\Id$ ; 
+   the result $v_h$ of our inpainting with $h=h_{0.1,-0.5}$ before the contrast change ; 
+   the result $v_h^{[h]}$ of our inpainting after the contrast change. 
+   }
+   \label{fig:without-h-with-h}
+\end{figure}
+
+%%%
+\paragraph{Rendering function}
+To cope with more general form of oscillating patterns, the reconstructed texture is switched from $v$ to $v^{[h]}$ using a ``rendering function'' 
+\eq{
+	h: [0,1] \rightarrow \RR.
+} 
+This function allows one to change the contrast of a texture $v$ having a local amplitude field $A(p)$ by computing
+\eql{\label{eq-dfn-change-contrast}
+	v^{[h]}(x) = A(p) h( v(x) / A(p) )
+}
+where $p$ is the closest integer to $x/\Delta_x$. 
+
+By analogy to \eqref{eq-texture-approx}, for points $x$ around $x_p = p \Delta_x$ close to the center of a missing region, the inpainted texture $v$ is approximately
+\eq{
+	v(x) \approx A(p) h\left( \sin( 2\pi \dotp{x}{\xi(p)}  + \phi ) \right).
+}
+Figure \ref{fig:without-h-with-h} (c) and (d) shows an example of inpainting using a well chosen rendering function. The details of the inpainting method are given in Section \ref{sec-non-convex-inpainting}.
+
+%%%
+\paragraph{Estimating the rendering function}
+
+Similarly to the computation of the amplitude field, computing an optimized rendering function to achieve the best visual result is difficult. We thus restrict ourself to a parametrized family $\{ h_{a,b} \}_{a,b}$ depending on two shape parameters $a>0$ and $-\frac{1}{2} < b < \frac{1}{2}$
+\begin{equation}\label{eq:expression-h}
+	\foralls t, \quad h_{a,b}(t) = \sign(t-b) |t-b|^a.
+\end{equation}
+Figure~\ref{fig:examples-h} shows some examples of functions $h_{a,b}$ for various values of $a$ and $b$ and the effect of applying the change of contrast $v^{[h_{a,b}]}$ to a sinusoidal pattern $v$. 
+
+The parameter $a$ controls the shape of the oscillating pattern: for $a<1$ one obtains a ``crenel'' profile, for $a=1$ one gets a sinusoidal profile, and for $a>1$ the profile is flat around $0$ and presents peaks at the minimum and maximum values. The parameter $b$ balances the importance between the negative and the positive values in the pattern profile.
+
+In the numerical simulation, the parameters $(a,b)$ are manually tuned by the user to achieve a good visual quality. More advanced adaptation strategies could be used, but we found it sufficient to explore manually the set of parameters.
+
+\begin{figure}[!ht]
+       \begin{center}
+         \begin{tabular}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+       		       $h_{1,0}$   &   $h_{0.3,0}$   &  $h_{0.1,-0.5}$  & $h_{2,0}$  \\
+       		\includegraphics[width=.24\linewidth]{examples_h/plot_h_identity}&
+       		\includegraphics[width=.24\linewidth]{examples_h/plot_h_a0p3_b0}
+		&
+       		\includegraphics[width=.24\linewidth]{examples_h/plot_h_a0p1_bm0p5}&
+       		\includegraphics[width=.24\linewidth]{examples_h/plot_h_a2_b0}  
+		  \\
+         	     $(a,b) = (1,0)$  &   $(a,b) = (0.3,0)$   &  $(a,b) = (0.1,-0.5)$  & $(a,b) = (2,0)$  \\
+           \includegraphics[width=.24\linewidth]{examples_h/sinusoidal}&
+          \includegraphics[width=.24\linewidth]{examples_h/h_a0p3_b0}
+           &
+       		\includegraphics[width=.24\linewidth]{examples_h/h_a0p1_bm0p5}&
+       		\includegraphics[width=.24\linewidth]{examples_h/h_a2_b0}    		
+       	\end{tabular}
+   \end{center}
+   \caption{Examples of functions $h_{a,b}$ (top row) for various values of $a$ and $b$ and patterns $v^{[h_{a,b}]}$.}
+%     illustration of their effect on a sinusoidal pattern: (a) the original sinusoidal pattern $v$ corresponding to $h_{1,0}(v)=v$ ; (b) a "crenel" pattern $h_{0.1,0}(v)$ ; (c) a "stripe" pattern  $h_{0.1,-0.5}(v)$ ; (d) the pattern $h_{6,0}(v)$.
+   \label{fig:examples-h}
+\end{figure}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Non-Convex Inpainting}
+\label{sec-non-convex-inpainting}
+
+Taking into account the non convex energy $T_{A,\xi}$ defined in
+\eqref{eq:non-convex-def} and the change of contrast
+\eqref{eq-dfn-change-contrast} gives rise to the following non-convex
+minimization problem:
+\begin{equation}
+	\label{eq:non-convex-h}
+	\boxed{
+		(u,v,\xi) = \uargmin{\tu,\ \tv,\ \txi \in \Cc}
+		\frac{1}{2} \normLdeux{f-\Phi(\tu + \tilde v^{[h]})}^2 + \lambda\:J(\tu) + \mu \: T_{A,\txi}(\tv).
+	}
+\end{equation}
+The texture component extracted by this method is then given by $v^{[h]}$ and $v$ is an approximation using pure sinusoidal oscillations of the texture present in the image. The inpainted image is computed as $u+v^{[h]}$.
+
+%%
+\paragraph{Non-Convex Regularization Algorithm}
+
+This section describes an algorithm to minimize \eqref{eq:non-convex-h} for a given rendering function $h: \RR \rightarrow \RR^+$ and a given amplitude field $A: \{1,\ldots,n/\Delta_x\}^2 \rightarrow \RR^+$ with respect to $\xi$, $u$ and $v$. Similarly to Section~\ref{sect:nrj-minim}, one iterates between the minimization on $\xi$, on $u$ and on $v$. In practice, the amplitude field $A$ is updated during the minimization process to provide a more accurate estimation of the texture amplitude. 
+
+The energy is decreasing at each step but this algorithm is not guaranteed to converge to a local minimum of \eqref{eq:non-convex-h}. However during our numerical experiments, we observed that the algorithm always converges.
+
+\medskip
+
+%%
+\paragraph{Minimization with respect to $\xi$}
+Similarly to Section~\ref{subsect:minim-xi}, if $u$ and $v$ are fixed, we compute the frequency field $\xi$ that satisfies
+\begin{equation}
+	\xi = \uargmin{\txi \in \Cc}\ T_{A,\txi}(v)
+\end{equation}
+where $T_{A,\xi}$ is defined in \eqref{eq:non-convex-def}.
+
+This requires, for each $p$, to compute
+\begin{equation}
+	\xi(p) = \uargmin{|\theta|>\tau} \norm{ A_p - A(p) \chi_{\theta} }
+	\qwhereq
+	A_p = \{ |\dotp{v}{\psi_{p,k}}|_\epsilon \}_k	.
+\end{equation}
+To speed up the computation, and similarly to Section~\ref{subsect:minim-xi}, we compute an approximate solution 
+\begin{equation}
+	\xi(p) = 
+	\Delta_\xi \quad \uargmax{k > \frac{\tau}{|\Delta_\xi|}} \quad |\Psi v[p,k]|.
+\end{equation}
+
+\medskip
+%%
+\paragraph{Minimization with respect to $u$} If $\xi$ and $v$ are fixed, the minimization on $u$ is similar to \eqref{eq:rof-minimization} by setting $y = f-\Phi( v^{[h]} )$, and it can therefore be solved using the algorithm described in Section~\ref{subsubsec:rof-minim}.
+
+\medskip
+
+%%
+\paragraph{Minimization with respect to $v$}  When $\xi$ and $u$ are fixed, the minimization on $v$ is a smooth non-convex problem. Defining $y = f-\Phi(u)$, one minimizes
+\begin{equation}
+\label{eq:non-convex-nrj-on-v}
+	E(v) = \frac{1}{2} \normLdeux{y - \Phi(v^{[h]})}^2 + \mu\:T_{A,\xi}(v)
+\end{equation}
+For a given step size $\nu>0$, we use a gradient descent scheme 
+\begin{equation}
+\label{eq:grad-desc}
+	v^{(l+1)} = v^{(l)} - \nu \big( \mathcal{G}_1 + \mu \mathcal{G}_2 \big)
+\end{equation}
+where $\mathcal{G}_1$ is the gradient of $\frac{1}{2} \normLdeux{y - \Phi( v^{[h]} )}^2$ with respect to $v$ and $\mathcal{G}_2$ is the gradient of $T_{A,\xi}(v)$ with respect to $v$.
+
+These two gradients are computed as
+\begin{equation}\label{eq:grad-first-term}
+	\mathcal{G}_1 = -\Big(y - \Phi( v^{[h]} ) \Big)\:h'(v)
+	\quad\text{and}\quad
+	\mathcal{G}_2 = \Psi^* c
+\end{equation}
+%\begin{equation}
+%|\dotp{v + dv}{\psi_{p,k}}| = \sqrt{|\dotp{v}{\psi_{p,k}}|^2 + 2  \dotp{dv}{Re\big(\dotp{v}{\psi_{p,k}}\psi_{p,k}\big)} + o(|dv|)}
+%\end{equation}
+%\begin{equation}
+%|\dotp{v + dv}{\psi_{p,k}}| = |\dotp{v}{\psi_{p,k}}| \sqrt{ 1 + 2  \frac{\dotp{dv}{Re\big(\dotp{v}{\psi_{p,k}}\psi_{p,k}\big)}}{|\dotp{v}{\psi_{p,k}}|^2} + o(|dv|)}
+%\end{equation}
+%\begin{equation}
+%|\dotp{v + dv}{\psi_{p,k}}| = |\dotp{v}{\psi_{p,k}}| (1 + \frac{\dotp{dv}{Re\big(\dotp{v}{\psi_{p,k}}\psi_{p,k}\big)}}{|\dotp{v}{\psi_{p,k}}|^2} + o(|dv|))
+%\end{equation}
+%\begin{equation}
+%|\dotp{v + dv}{\psi_{p,k}}| = |\dotp{v}{\psi_{p,k}}|  + \dotp{dv}{Re\big(\frac{\dotp{v}{\psi_{p,k}}}{|\dotp{v}{\psi_{p,k}}|}{\psi_{p,k}\big)}} + o(|dv|)
+%\end{equation}
+%For the second term, let us start with
+%\[
+%\mathcal{G}(|\dotp{v}{\psi_{p,k}}|) = Re\big(\frac{\dotp{v}{\psi_{p,k}}}{|\dotp{v}{\psi_{p,k}}|}{\psi_{p,k}\big)}.
+%\]
+%\begin{equation}
+%T_{A,\xi}(v+dv)^2 = \sum_{p,k} \Big(|\dotp{v}{\psi_{p,k}}| -\chi_{p,k}(A,\xi) +   \dotp{dv}{Re\big(\frac{\dotp{v}{\psi_{p,k}}}{|\dotp{v}{\psi_{p,k}}|}{\psi_{p,k}\big)}} + o(|dv|)\Big)^2
+%\end{equation}
+%\begin{equation}
+%T_{A,\xi}(v+dv)^2 = T_{A,\xi}(v)^2 + \sum_{p,k} 2  \dotp{dv}{Re\big(\frac{\dotp{v}{\psi_{p,k}}}{|\dotp{v}{\psi_{p,k}}|}{\psi_{p,k}\big)}} (|\dotp{v}{\psi_{p,k}}| -\chi_{p,k}(A,\xi)) + o(|dv|)
+%\end{equation}
+%
+%\bigskip
+%%
+%\begin{equation}
+%\nabla(\nonconvexnormT{v}^2) = \sum_{p,k} 2  Re\big(\frac{\dotp{v}{\psi_{p,k}}}{|\dotp{v}\psi_{p,k}|}{\psi_{p,k}\big)} (|\dotp{v}{\psi_{p,k}}| -\chi_{p,k}(A,\xi))
+%\end{equation}
+%And, using this expression, we can easily obtain
+%\begin{equation}
+%\mathcal{G}(T_{A,\xi}(v)) = 2 Re \Big( \sum_{p,k} \big(1 -\frac{A(p)\:\chi_{p,k}(\xi)}{|\dotp{v}{\psi_{p,k}}|}\big)\dotp{v}{\psi_{p,k}}\psi_{p,k}\Big)
+%\end{equation}
+%which can also be written as
+where $c$ is a set of coefficients defined by
+\begin{equation}
+	c[p,k] = 2 \Big(1 -\frac{A(p)\:\chi_{\xi(p)}(k)}{|\dotp{v}{\psi_{p,k}}|_\epsilon}\Big)\dotp{v}{\psi_{p,k}}.
+\end{equation}
+and where the dual operator $\Psi^*$ is defined in \eqref{def:dual_operator}. 
+
+If the gradient step size $\nu$ is small enough, the iterates $v^{(l)}$ converge to a local minimum of $E(v)$ defined in \eqref{eq:non-convex-nrj-on-v}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Numerical Experiments}
+Similarly to Section~\ref{subsec:inpainting}, we define the cartoon functional $J(u)$ using \eqref{def:Ju-cartoon} with $\tvcurvweight=0.75$.
+As far as the computational cost is concerned, the minimizing steps on $u$ and $\xi$ are equivalent to the one studied in section~\ref{sect:nrj-minim}. The minimizing step on $v$ is yet different and the conjugate gradient descent is replaced by a standard gradient descent which is generally slower. For an image of size $512\times512$, the processing time is about $30$~minutes.
+
+Figure~\ref{fig:bugsbunny_inpainting_non_cvxe} shows an example of inpainting reconstruction of the image $f_0$ from Figure~\ref{fig:bugsbunny_fingerprint_denoising} degraded by a large hole $\Omega$. We used the same parameters as in Figure~\ref{fig:bugsbunny_fingerprint_denoising}. To obtain a ``crenel'' profile similar to the profile of the fingerprint texture, we chose $h=h_{0.3,0}$.
+
+\begin{figure}[!ht]
+   \begin{center}
+   	\begin{tabular*}{.6\textwidth}{@{}c@{\hspace{2mm}}c@{}}
+      	 (a) $y$ & (b) $u+v^{[h]}$ \\
+      	 \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/non_cvxe/y}&
+        \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/non_cvxe/u_plus_hv}
+      \end{tabular*}
+     \begin{tabular}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+       (c) $u$  &  (d) $v$  &  (e) $v^{[h]}$ \\
+       \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/non_cvxe/u}&
+       \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/non_cvxe/v}&
+       \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/non_cvxe/hv}
+      \end{tabular}
+   \end{center}
+   \caption{(a) the image $y$ to inpaint (the missing part is in black), the original image is $f_0$ in Fig.~\ref{fig:bugsbunny_fingerprint_denoising} ; (b)  the reconstruction $u+v^{[h]}$ using our non convex method ; (c) the inpainted geometric component $u$, (d) the sinusoidal approximation $v$ of the texture component, (e) the inpainted texture component $v^{[h]}$  after the change of contrast.}
+    \label{fig:bugsbunny_inpainting_non_cvxe}
+\end{figure}
+
+Figure~\ref{fig:bugsbunny_inpainting_comparison} compares our result with a copy-paste based method~\cite{Perez04b}, even though it is beyond the scope of this paper to make such comparisons, since the focus is on energy minimization based methods. Nevertheless, this figure shows that, as expected, a copy-paste based method fails to reconstruct properly the orientation of the locally parallel texture.
+\begin{figure}[!ht]
+   \begin{center}
+     \begin{tabular}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+      	 (a) & (b) & (c)\\
+      	 \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/non_cvxe/y}&
+      	 \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/non_cvxe/u_plus_hv}&
+      	 \includegraphics[width=.32\linewidth]{inpainting/Bugsbunny/non_cvxe/bugs2_patch}\\
+     \end{tabular}
+   \end{center}
+   \caption{(a) the image to inpaint (the missing part is in black), (b)   the reconstruction using our non convex method, (c) result of  the ``patchworks'' method~\cite{Perez04b}.}
+    \label{fig:bugsbunny_inpainting_comparison}
+\end{figure}
+
+Figure~\ref{fig:desert_inpainting} shows the inpainting of a desert picture\footnote{This picture is extracted from a photography of Cesar Fernandez and we thank him for allowing us to use it.} of size $512\times512$. We use our non-convex method with parameters $\lambda=0.3$, $\mu=0.01$, $q=48$ and $\Delta_x=16$. We choose as rendering function $h=h_{2,0}$ which gives a texture profile similar to the one present in the original picture (see Figure~\ref{fig:examples-h}). Since the profile of the real texture is more sophisticated than the chosen rendering function, the difference between the inside and the outside of the mask is visually noticeable. However the reconstruction of the texture orientation inside the mask is coherent with the known part of the image.
+
+\begin{figure}[!ht]
+   \begin{center}
+   \begin{tabular}{c}
+   	(a) $f_0$\\
+   	\includegraphics[width=.32\linewidth]{inpainting/Desert/desert_M}
+   \end{tabular}
+   	\begin{tabular}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+      	 (b) $y$ & (c) $u+v^{[h]}$ & (d) $A$ \\
+      	 \includegraphics[width=.32\linewidth]{inpainting/Desert/desert_y}&
+      	 \includegraphics[width=.32\linewidth]{inpainting/Desert/desert_u_plus_hv_ha2}&
+      	 \includegraphics[width=.32\linewidth]{inpainting/Desert/desert_amplitudes_ha2}\\
+       	(e) $u$  &  (f) $v$  &  (g) $v^{[h]}$ \\
+       \includegraphics[width=.32\linewidth]{inpainting/Desert/desert_u_ha2}&
+       \includegraphics[width=.32\linewidth]{inpainting/Desert/desert_v_ha2}&
+       \includegraphics[width=.32\linewidth]{inpainting/Desert/desert_hv_ha2}
+      \end{tabular}
+   \end{center}
+   \caption{First row: (a) $f_0$ the original image. Second row: (b) $y$ the image to inpaint (the missing part is in black), (c)   the reconstruction $u+v^{[h]}$ using our non convex method, (d) the estimated amplitudes $A$. Third row: (e)  the inpainted geometric component $u$, (f) the sinusoidal approximation $v$ of the texture component, (g) the inpainted texture component $v^{[h]}$ after the change of contrast.}
+    \label{fig:desert_inpainting}
+\end{figure}
+
+
+Figure~\ref{fig:desert_inpainting_comparison} compares our result with a copy-paste based method~\cite{Perez04b}, even though it is beyond the scope of this paper to make such comparisons, since the focus is on energy minimization based methods. Nevertheless, this figure shows that, as expected, a copy-paste based method fails to reconstruct properly the orientation of the locally parallel texture.
+
+
+\begin{figure}[!ht]
+   \begin{center}
+     \begin{tabular}{@{}c@{\hspace{2mm}}c@{\hspace{2mm}}c@{}}
+      	 (a) & (b) & (c)\\
+      	 \includegraphics[width=.32\linewidth]{inpainting/Desert/desert_y}&
+      	 \includegraphics[width=.32\linewidth]{inpainting/Desert/desert_u_plus_hv_ha2}&
+      	 \includegraphics[width=.32\linewidth]{inpainting/Desert/desert_patch}\\
+     \end{tabular}
+   \end{center}
+   \caption{(a) the image to inpaint (the missing part is in black), (b)   the reconstruction using our non convex method, (c) result of  the ``patchworks'' method~\cite{Perez04b}.}
+    \label{fig:desert_inpainting_comparison}
+\end{figure}
+
+
+
+
+\bigskip
+
+\section{Conclusion}
+This paper presented a new adaptive framework for locally parallel texture modeling. Two new adaptive texture models well-suited for locally parallel oscillating patterns were studied. The use of these adaptive models 
+%improves state of the art algorithms 
+provide satisfactory results
+both in decomposition and inpainting for images which contain oriented textures. Adaptivity is indeed crucial for this kind of images where the texture is anisotropic, since it allows one to take into account the texture geometry. 
+
+The adaptation to the texture geometry is obtained by optimizing an orientation field $\xi$ which is computed iteratively by our algorithm. To inpaint large missing regions, we increase this adaptivity by considering also an amplitude field and a rendering function. 
+% The resulting functional bridges the gap between convex variational regularization methods and non-convex patch-based synthesis methods. 
+Inpainting larges holes, which boils down to the synthesis of new information, is hence obtained by switching from a convex regularization  to a non-convex boosting term controlled by an amplitude field.
+
+%The non-convex generalization presented in the last part of this paper allows indeed to solve the difficult problem of large holes inpainting for an image composed by a cartoon part and a locally parallel texture component. The contrast change function $h$ enables to cope with general oscillation profile and simple examples of $h$ were given and used in the numerical examples.
+
+%On the other hand the reconstruction of the geometric component is only accomplished by the effect of the total variation norm. However since our method provides a separation into two components (geometry and texture), one can imagine to apply a post-processing on the geometric component using any method available to improve the final reconstruction.
+
+\bigskip
+
+\paragraph{Acknowledgment:}
+The authors would like to thank Yann Gousseau for providing them with the inpainting results of the patch-based inpainting algorithms.
+
+
+\bigskip
+
+
+
+\appendix
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Algorithm to Compute the Proximity Operator}
+\label{sect:appendix}
+
+In the following we use the discrete gradient operator $\nabla$ defined in \eqref{eq-disc-grad} and denote the curvelet decomposition operator as
+\eq{
+	\mathcal{D}g = \{ \dotp{g}{c_m} \}_m
+}
+where $c_m = c_{j,l,k}$ is a curvelet atom. 
+As first noted by Bect et al. in~\cite{bect-chambolle-iterative}, the cartoon model defined in Section~\ref{sect:cartoon-model} can be written as 
+\eq{
+	J(g)=\normu{Q g}
+} 
+where the linear operator $Q$ is defined as
+\begin{equation}\label{eq:def-Q-Tv-curvelet}
+	Q: \left\{
+	\begin{array}{ccc}
+	\RR^N &\longrightarrow &\RR^{N \times 2} \times  \RR^P\\
+  	  g  &\longmapsto & \left(
+  	\begin{array}{c}
+  		\tvcurvweight \nabla g\\
+  		(1-\tvcurvweight) \mathcal{D} g
+  	\end{array}
+  	\right)
+	\end{array}
+	\right.
+\end{equation}
+where $P$ is the number of curvelet atoms.
+The $\lun$ norm of an element $p=(z,w) \in \RR^{N \times 2} \times \RR^P$ is defined as
+\begin{equation}
+	\normu{(z,w)} = \normu{z} + \normu{w} = \sum_{1 \leq i \leq N} \sqrt{(z^1_i)^2 + (z^2_i)^2} + \sum_{1 \leq i \leq P} |w_i|.
+\end{equation}
+The dual operator $Q^*$ is then given by
+\begin{equation}
+Q^*: \left\{
+\begin{array}{ccc}
+	\RR^{N \times 2} \times \RR^P &\longrightarrow &\RR^N  \\
+ 	\left(
+  	\begin{array}{c}
+  		z\\ w
+  	\end{array}  
+	\right)& \longmapsto & -\tvcurvweight \diverg z + (1-\tvcurvweight) \mathcal{D}^* w
+\end{array}
+\right.
+\end{equation}
+where the divergence of a vector field $p \in \RR^{N \times 2}$ is computed as described in~\cite{chambolle-algo-tv}
+\eq{
+	\diverg(p) = -\nabla^* p = \partial_x^* p_1 + \partial_y^* p_2,
+}
+where
+\begin{align*}
+	\partial_x^* f[i,j]& =
+	\left\{ 
+		\begin{array}{ll} 
+			f[i,j]-f[i-1,j] &\qifq 0 < i < n-1,\\
+		  f[i,j] &\qifq i = 0,\\
+		  -f[i-1,j] &\qifq i = n-1,
+		\end{array}
+	\right. \\
+	\partial_y^* f[i,j]& = 
+	\left\{ 
+		\begin{array}{ll} 
+		f[i,j]-f[i,j-1] &\qifq 0 < j < n-1,\\
+		f[i,j] &\qifq j = 0,\\
+		-f[i,j-1] &\qifq j = n-1.
+	\end{array}
+	\right.
+\end{align*}
+
+
+Chambolle shows in~\cite{chambolle-algo-tv} that for such a functional $J(g)=\normu{Q g}$, the proximal operator satisfies
+\eql{
+	\prox_{\omega J}(g) =  g - \omega Q^*(p^\star)
+} 
+where $p^\star=(z^\star,w^\star) \in \RR^{N \times 2}\times \RR^P$ is a solution of
+\eql{
+	\umin{\normi{p} \leq 1}  \norm{Q^* p - g / \omega}^2
+}
+where the $\ell^\infty$ norm is defined as
+\eql{
+	\normi{(z,w)} = \max\left(
+		\umax{1 \leq i \leq N} \sqrt{(z^1_i)^2 + (z^2_i)^2},
+		\umax{1 \leq i \leq P} |w_i|
+	\right).
+}
+For the computation of $p^\star$, Chambolle proposes a fixed point algorithm that can be replaced by a projected gradient descent.
+Starting from $p^{(0)}= (0,0) \in \RR^{N \times 2}\times \RR^P$, $\ell=0$, one then iterates between a gradient descent step to minimize $\norm{Q^* p - g / \omega}^2$
+\begin{equation}
+	\label{eq:algo-proj1}
+	\tilde p^{(\ell)} = p^{(\ell)} - \nu Q ( Q^* p^{(\ell)} - g/\omega)
+\end{equation}
+and a projection onto the constraints $\enscond{p}{\normi{p} \leq 1}$
+\begin{equation}
+	\label{eq:algo-proj2}
+	\foralls i, \quad 
+		p^{(\ell+1)}_i = \frac{ \tilde p^{(\ell)}_i }{
+		\max( 1,\norm{\tilde p^{(\ell)}_i}) }.
+\end{equation}
+If the gradient step size satisfies $\nu < 2/\norm{Q Q^*}$, then $g - \omega Q^* p^{(\ell)}$ converges to $\prox_{\omega J}(g)$.
+
+\bibliographystyle{siam}  % plain alpha
+
+\bibliography{bibliography}
+
+\end{document}
+

@@ -1,0 +1,45 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.4)
+The top-level auxiliary file: MaurelAujolPeyre-SIIS.aux
+The style file: siam.bst
+Database file #1: bibliography.bib
+You've used 52 entries,
+            2030 wiz_defined-function locations,
+            879 strings with 13028 characters,
+and the built_in function-call counts, 20298 in all, are:
+= -- 2040
+> -- 822
+< -- 0
++ -- 326
+- -- 270
+* -- 1522
+:= -- 3006
+add.period$ -- 53
+call.type$ -- 52
+change.case$ -- 291
+chr.to.int$ -- 0
+cite$ -- 52
+duplicate$ -- 967
+empty$ -- 1465
+format.name$ -- 270
+if$ -- 4462
+int.to.chr$ -- 0
+int.to.str$ -- 52
+missing$ -- 52
+newline$ -- 160
+num.names$ -- 104
+pop$ -- 239
+preamble$ -- 1
+purify$ -- 239
+quote$ -- 0
+skip$ -- 901
+stack$ -- 0
+substring$ -- 1538
+swap$ -- 470
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 206
+warning$ -- 0
+while$ -- 215
+width$ -- 54
+write$ -- 469
